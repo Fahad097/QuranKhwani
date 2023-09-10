@@ -19136,10 +19136,17 @@ Future<void> saveAndUploadToFirebaseStorage() async {
   // String modifiedText = ayaSplits.replaceAllMapped(
   //     RegExp(r'ۙ|۝'), (match) => '|${match.group(0)}');
   // for (var i = 0; i < ayaSplit.length; i++)
+  List<String> unique = [];
   for (var i = 0; i < datalist.length; i++) {
     var data = datalist[i]['verse'].toString();
     var dataSplit = data.split(' ');
-    for (var j = 0; j < dataSplit.length; j++) sheet.appendRow([dataSplit[j]]);
+    for (var j = 0; j < dataSplit.length; j++) {
+      unique.add(dataSplit[j]);
+      if (unique.contains(dataSplit[j])) {
+        sheet.appendRow([dataSplit[j]]);
+      }
+    }
+
     count++;
     print(count);
   }
