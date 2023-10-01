@@ -3,14 +3,12 @@ import 'dart:io';
 import 'dart:math';
 import 'package:qurankhwani/GameLists.dart';
 import 'package:qurankhwani/group_screen.dart';
-import 'package:qurankhwani/home.dart';
 import 'package:qurankhwani/main.dart' as main;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:qurankhwani/homeScreen.dart';
 
 class IntroName extends StatefulWidget {
   var name;
@@ -22,7 +20,7 @@ class IntroName extends StatefulWidget {
 
 class _IntroNameState extends State<IntroName> {
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final email = TextEditingController();
@@ -42,11 +40,12 @@ class _IntroNameState extends State<IntroName> {
   }
 
   startTime(name) async {
-    var duration = new Duration(seconds: 2);
-    if(name == 'grp')
-    return new Timer(duration, route);
-    else
-    return new Timer(duration, route1);
+    var duration = const Duration(seconds: 2);
+    if(name == 'grp') {
+      return Timer(duration, route);
+    } else {
+      return Timer(duration, route1);
+    }
   }
 
   route() {
@@ -55,7 +54,7 @@ class _IntroNameState extends State<IntroName> {
   }
   route1() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => GameLists()));
+        context, MaterialPageRoute(builder: (context) => const GameLists()));
   }
 
   _imgFromCamera() async {
@@ -88,18 +87,18 @@ class _IntroNameState extends State<IntroName> {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: new Wrap(
+              child: Wrap(
                 children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+                  ListTile(
+                      leading: const Icon(Icons.photo_library),
+                      title: const Text('Photo Library'),
                       onTap: () {
                         _imgFromGallery();
                         Navigator.of(context).pop();
                       }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+                  ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: const Text('Camera'),
                     onTap: () {
                       _imgFromCamera();
                       Navigator.of(context).pop();
@@ -131,14 +130,14 @@ class _IntroNameState extends State<IntroName> {
               child: Center(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
                   "assets/image/Qurankhwani.png",
                   height: 200,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -161,7 +160,7 @@ class _IntroNameState extends State<IntroName> {
                         color: HexColor("#2a6e2d")),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -171,7 +170,7 @@ class _IntroNameState extends State<IntroName> {
                     },
                     child: CircleAvatar(
                       radius: 55,
-                      backgroundColor: Color(0xffFDCF09),
+                      backgroundColor: const Color(0xffFDCF09),
                       child: _image != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(50),
@@ -196,7 +195,7 @@ class _IntroNameState extends State<IntroName> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Form(
@@ -218,7 +217,7 @@ class _IntroNameState extends State<IntroName> {
                           child: TextFormField(
                             controller: myController,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               hoverColor: HexColor("#2a6e2d"),
                             ),
                             validator: (value) {
@@ -244,7 +243,7 @@ class _IntroNameState extends State<IntroName> {
                           child: TextFormField(
                             controller: email,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               hoverColor: HexColor("#2a6e2d"),
                             ),
                             validator: (value) {

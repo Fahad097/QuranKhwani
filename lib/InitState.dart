@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/home.dart';
-import 'package:qurankhwani/homeScreen.dart';
 
 class InitState extends StatefulWidget {
   const InitState({Key? key}) : super(key: key);
@@ -14,8 +12,8 @@ class InitState extends StatefulWidget {
 
 class _InitStateState extends State<InitState> {
   startTime() async {
-    var duration = new Duration(seconds: 4);
-    return new Timer(duration, route);
+    var duration = const Duration(seconds: 4);
+    return Timer(duration, route);
   }
 
   route() {
@@ -43,14 +41,14 @@ class _InitStateState extends State<InitState> {
             Container(
               child: Image.asset("assets/image/Qurankhwani.png"),
             ),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
+            const Padding(padding: EdgeInsets.only(top: 20.0)),
             //Text(
             // "Splash Screen",
             // style: TextStyle(
             //   fontSize: 20.0,
             // ),
             //),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
+            const Padding(padding: EdgeInsets.only(top: 20.0)),
           ],
         ),
       ),

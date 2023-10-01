@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
@@ -9,7 +8,6 @@ import 'package:qurankhwani/homeScreen.dart' as list;
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
 import 'package:qurankhwani/main.dart';
-import 'package:qurankhwani/pageRoute.dart';
 import 'package:qurankhwani/surahLists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +35,7 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -51,7 +49,7 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordSurahPage()),
+        MaterialPageRoute(builder: (context) => const RecordSurahPage()),
       );
     }
     if (index == 3) {
@@ -77,13 +75,13 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -92,14 +90,14 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -111,7 +109,7 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
                   },
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 55),
+                  margin: const EdgeInsets.only(left: 55),
                   child: Text(
                     "Total Count",
                     style: TextStyle(
@@ -159,7 +157,7 @@ class _RecordSurahPageState extends State<RecordSurahPage> {
                       currentIndex: _selectedIndex,
                       onTap: _onItemTapped,
                       selectedItemColor: HexColor("#ffde59"),
-                      items: [
+                      items: const [
                         BottomNavigationBarItem(
                             icon: Icon(Icons.home), label: 'Home'),
                         BottomNavigationBarItem(

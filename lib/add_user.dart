@@ -24,7 +24,7 @@ class _AddUserState extends State<AddUser> {
     return Scaffold(
         appBar: AppBar(
             flexibleSpace: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/image/background.jpg"),
                   fit: BoxFit.cover,
@@ -56,7 +56,7 @@ class _AddUserState extends State<AddUser> {
                       child: ListTile(
                         title: Text(userName),
                         trailing: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add,
                             color: Colors.green,
                           ),
@@ -75,10 +75,10 @@ class _AddUserState extends State<AddUser> {
                                 .where('groupID', isEqualTo: widget.id)
                                 .get()
                                 .then((value) {
-                              if (value.docs.length != 0) {
-                                final snackBar = SnackBar(
+                              if (value.docs.isNotEmpty) {
+                                const snackBar = SnackBar(
                                   content:
-                                      const Text('This user is already Added'),
+                                      Text('This user is already Added'),
                                 );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
@@ -91,8 +91,8 @@ class _AddUserState extends State<AddUser> {
                                   'groupID': widget.id,
                                   'userName': userName
                                 });
-                                final snackBar = SnackBar(
-                                  content: const Text('Added to this Group'),
+                                const snackBar = SnackBar(
+                                  content: Text('Added to this Group'),
                                 );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);

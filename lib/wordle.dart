@@ -36,7 +36,7 @@ class _WordleScreenState extends State<WordleScreen> {
 
   void chooseRandomDua() {
     myController.clear();
-    Random random = new Random();
+    Random random = Random();
     int randomNumber = random.nextInt(wordle.length);
 
     setState(() {
@@ -105,11 +105,12 @@ class _WordleScreenState extends State<WordleScreen> {
       bool correctGuess = false;
       String newGuessedArabic = '';
       print(letter);
-      if (letter == '|')
+      if (letter == '|') {
         myController.text =
             myController.text.substring(0, myController.text.length - 1);
-      else
+      } else {
         myController.text += letter;
+      }
       for (int i = 0; i < currentDua.meaning.length; i++) {
         if (currentDua.meaning[i] == letter) {
           newGuessedArabic += letter + ' ';
@@ -131,20 +132,20 @@ class _WordleScreenState extends State<WordleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wordle Game'),
+        title: const Text('Wordle Game'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Text(
                 currentDua.arabic,
-                style: TextStyle(fontSize: 24),
+                style: const TextStyle(fontSize: 24),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 8,
@@ -158,26 +159,26 @@ class _WordleScreenState extends State<WordleScreen> {
                             ? guessLetter(String.fromCharCode(97 + index))
                             : guessLetter(String.fromCharCode(97 + index)),
                     child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: (String.fromCharCode(97 + index) == '{')
-                          ? Text(
+                          ? const Text(
                               'Space',
                               style:
                                   TextStyle(fontSize: 18, color: Colors.white),
                             )
                           : (String.fromCharCode(97 + index) == '|')
-                              ? Text(
+                              ? const Text(
                                   '<',
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 )
                               : Text(
                                   String.fromCharCode(97 + index),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                     ),
@@ -185,35 +186,35 @@ class _WordleScreenState extends State<WordleScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Guess the English Meaning:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 controller: myController,
-                decoration: InputDecoration(labelText: 'Enter meaning here'),
+                decoration: const InputDecoration(labelText: 'Enter meaning here'),
                 // onChanged: (value) {
                 //   //  guessedMeaning = value;
                 //   myController.text = value;
                 // },
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: checkAnswer,
-              child: Text('Check Answer'),
+              child: const Text('Check Answer'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             if (remainingAttempts > 0)
               Text(
                 'Attempts remaining: $remainingAttempts',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             if (remainingAttempts == 0)
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Out of attempts! Game over.',
@@ -224,23 +225,23 @@ class _WordleScreenState extends State<WordleScreen> {
                   ),
                 ),
               ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Jumbled Meaning Words:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Wrap(
                     spacing: 12,
                     children: jumbledArabicLetters.map((jumbledWord) {
                       colorCount++;
                       return Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 1.0, color: Colors.black),
                           ),
@@ -262,10 +263,10 @@ class _WordleScreenState extends State<WordleScreen> {
             ),
             if (feedbackMessage.isNotEmpty)
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   feedbackMessage,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.green,
@@ -277,7 +278,7 @@ class _WordleScreenState extends State<WordleScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: chooseRandomDua,
-        child: Icon(Icons.refresh),
+        child: const Icon(Icons.refresh),
       ),
     );
   }

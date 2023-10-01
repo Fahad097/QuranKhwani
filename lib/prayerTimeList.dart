@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -63,9 +62,9 @@ class _PrayerTimeState extends State<PrayerTime> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Location Permission Denied"),
+          title: const Text("Location Permission Denied"),
           content:
-              Text("Please enable location permissions in the app settings."),
+              const Text("Please enable location permissions in the app settings."),
           actions: [
             TextButton(
               onPressed: () {
@@ -73,13 +72,13 @@ class _PrayerTimeState extends State<PrayerTime> {
                 // Open app settings to let the user enable permissions
                 openAppSettings();
               },
-              child: Text("Open Settings"),
+              child: const Text("Open Settings"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
           ],
         );
@@ -102,17 +101,17 @@ class _PrayerTimeState extends State<PrayerTime> {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(
-        primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+        backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -124,7 +123,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 45),
+                margin: const EdgeInsets.only(left: 45),
                 child: Text(
                   "Prayer Times",
                   style: TextStyle(
@@ -136,14 +135,14 @@ class _PrayerTimeState extends State<PrayerTime> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           DropdownButtonHideUnderline(
               child: DropdownButton(
             // Initial Value
             value: data.dropdownvalue,
-            style: TextStyle(color: Colors.black, fontSize: 16),
+            style: const TextStyle(color: Colors.black, fontSize: 16),
             iconSize: 24,
             elevation: 16,
             // Down Arrow Icon
@@ -259,26 +258,31 @@ class _PrayerTimeState extends State<PrayerTime> {
                 DateTime prayerTime =
                     tz.TZDateTime.from(prayerTimes.fajr!, data.location);
                 final prayerName = prayerNames[index];
-                if (prayerName == 'Fajr')
+                if (prayerName == 'Fajr') {
                   prayerTime =
                       tz.TZDateTime.from(prayerTimes.fajr!, data.location);
-                if (prayerName == 'Dhuhr')
+                }
+                if (prayerName == 'Dhuhr') {
                   prayerTime =
                       tz.TZDateTime.from(prayerTimes.dhuhr!, data.location);
-                if (prayerName == 'Asr')
+                }
+                if (prayerName == 'Asr') {
                   prayerTime =
                       tz.TZDateTime.from(prayerTimes.asr!, data.location);
-                if (prayerName == 'Maghrib')
+                }
+                if (prayerName == 'Maghrib') {
                   prayerTime =
                       tz.TZDateTime.from(prayerTimes.maghrib!, data.location);
-                if (prayerName == 'Isha')
+                }
+                if (prayerName == 'Isha') {
                   prayerTime =
                       tz.TZDateTime.from(prayerTimes.isha!, data.location);
+                }
 
                 final displayDate = DateFormat.jm().format(prayerTime);
                 return Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     GestureDetector(

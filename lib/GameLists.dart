@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/GameOptionPage.dart';
-import 'package:qurankhwani/GamePageView.dart';
-import 'package:qurankhwani/GuessTheVoice.dart';
-import 'package:qurankhwani/QaidaPageView.dart';
 import 'package:qurankhwani/dragAndDrop.dart';
-import 'package:qurankhwani/jigsawPuzzle.dart';
 import 'package:qurankhwani/main.dart';
-import 'package:qurankhwani/homeScreen.dart' as data;
 import 'package:qurankhwani/quess_the_meaning.dart';
 import 'package:qurankhwani/scorecard_games.dart';
 import 'package:qurankhwani/suduko_puzzle.dart';
 import 'package:qurankhwani/wordle.dart';
+
+import 'jigsaw_game.dart';
 
 class GameLists extends StatefulWidget {
   const GameLists({super.key});
@@ -25,14 +22,14 @@ class _GameListsState extends State<GameLists> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -44,7 +41,7 @@ class _GameListsState extends State<GameLists> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 65),
+                margin: const EdgeInsets.only(left: 65),
                 child: Text(
                   "Game Lists",
                   style: TextStyle(
@@ -56,12 +53,12 @@ class _GameListsState extends State<GameLists> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               GestureDetector(
@@ -83,8 +80,8 @@ class _GameListsState extends State<GameLists> {
                       ),
                     ),
                     trailing: IconButton(
-                      icon:
-                          Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                      icon: const Icon(
+                          IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -99,7 +96,7 @@ class _GameListsState extends State<GameLists> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
@@ -122,7 +119,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -134,14 +132,14 @@ class _GameListsState extends State<GameLists> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => JigsawPuzzles()),
+                MaterialPageRoute(builder: (context) => PuzzleGame()),
               );
             },
             child: Card(
@@ -156,7 +154,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -168,14 +167,15 @@ class _GameListsState extends State<GameLists> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => GuesstheMeaning()),
+                MaterialPageRoute(
+                    builder: (context) => const GuesstheMeaning()),
               );
             },
             child: Card(
@@ -190,7 +190,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -202,7 +203,7 @@ class _GameListsState extends State<GameLists> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
@@ -224,7 +225,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -236,14 +238,14 @@ class _GameListsState extends State<GameLists> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DragAndDrop()),
+                MaterialPageRoute(builder: (context) => const DragAndDrop()),
               );
             },
             child: Card(
@@ -258,7 +260,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -270,7 +273,7 @@ class _GameListsState extends State<GameLists> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           GestureDetector(
@@ -292,7 +295,8 @@ class _GameListsState extends State<GameLists> {
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
+                    icon: const Icon(
+                        IconData(0x1F3C6, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       Navigator.push(
                           context,

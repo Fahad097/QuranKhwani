@@ -3,7 +3,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/material.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as char;
 import 'package:qurankhwani/GameResult.dart';
-import 'package:qurankhwani/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as val;
@@ -23,18 +22,18 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
   int render = 0;
   var questionList = [];
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
            
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                child: Text(
+                child: const Text(
                   'Guess The Voice',
                   style: TextStyle(
                       fontFamily: 'Schyler',
@@ -70,13 +69,13 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (!snapshot.hasData) {
-                                      return new Center(
+                                      return const Center(
                                         child: CircularProgressIndicator(),
                                       );
                                     }
                                     
                                     if (question == '') {
-                            Future.delayed(Duration(seconds: 2), () {
+                            Future.delayed(const Duration(seconds: 2), () {
                               setState(() {
                                 randomQ =
                                     Random().nextInt(questionList.length);
@@ -97,8 +96,9 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
                                                   ds =
                                                   snapshot.data?.docs[random];
                                               String element = ds!["element"];
-                                              if (render == 0)
+                                              if (render == 0) {
                                                 questionList.add(element);
+                                              }
                                               return ListTile(
                                                 title: Text(
                                                   'Voice ' + indx.toString(),
@@ -119,9 +119,10 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
                                                           FlutterTts();
                                                       tts.setLanguage("ar-SA");
                                                       tts.speak(answer);
-                                                        if (question == '')
-                                              randomQ = Random()
+                                                        if (question == '') {
+                                                          randomQ = Random()
                                                   .nextInt(questionList.length);
+                                                        }
 
                                             question = questionList[randomQ];
                                                     });
@@ -129,14 +130,14 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
                                                 ),
                                               );
                                             }),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 200,
                                         ),
-                                        (question == '')?new Center(
+                                        (question == '')?const Center(
                                         child: CircularProgressIndicator(),
                                       ):Text(
                                                           question.toString(),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 56,
                                                               fontFamily:
                                                                   'Al Qalam Quran'),
@@ -185,39 +186,41 @@ class _GuessTheVoiceState extends State<GuessTheVoice> {
                                               val.result++;
                                                val.pageCount++;
                                               tts.speak('Correct Answer');
-                                              if (val.pageCount >= 6)
+                                              if (val.pageCount >= 6) {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           GameResult('Guess the Voice',0,0)),
                                                 );
-                                              else
+                                              } else {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          GuessTheVoice()),
+                                                          const GuessTheVoice()),
                                                 );
-                                            } else if (question == '')
+                                              }
+                                            } else if (question == '') {
                                               tts.speak('Please Select Option');
-                                            else {
+                                            } else {
                                                val.pageCount++;
                                               tts.speak('Wrong Answer');
-                                              if (val.pageCount >= 6)
+                                              if (val.pageCount >= 6) {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           GameResult('Guess the Voice',0,0)),
                                                 );
-                                              else
+                                              } else {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          GuessTheVoice()),
+                                                          const GuessTheVoice()),
                                                 );
+                                              }
                                             }
                                           },
                                           child: const Text(

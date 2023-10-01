@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
 import 'package:qurankhwani/group_screen.dart';
 import 'package:qurankhwani/homeScreen.dart' as list;
-import 'package:qurankhwani/SurahLists.dart';
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
-import 'package:qurankhwani/juzLists.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:qurankhwani/pageRoute.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,7 +35,7 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -46,14 +43,14 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -93,13 +90,13 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -108,14 +105,14 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -127,7 +124,7 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
                   },
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 55),
+                  margin: const EdgeInsets.only(left: 55),
                   child: Text(
                     "Total Count",
                     style: TextStyle(
@@ -175,7 +172,7 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
                       currentIndex: _selectedIndex,
                       onTap: _onItemTapped,
                       selectedItemColor: HexColor("#ffde59"),
-                      items: [
+                      items: const [
                         BottomNavigationBarItem(
                             icon: Icon(Icons.home), label: 'Home'),
                         BottomNavigationBarItem(

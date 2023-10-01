@@ -1,10 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers
-import 'dart:async';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/RecordPage.dart';
 import 'package:qurankhwani/add_groups.dart';
@@ -13,8 +10,6 @@ import 'package:qurankhwani/duaLists.dart';
 import 'package:qurankhwani/grid_detail.dart';
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
-import 'package:qurankhwani/SurahLists.dart';
-import 'package:qurankhwani/juzLists.dart';
 import 'package:qurankhwani/pageRoute.dart';
 
 class GroupScreen extends StatefulWidget {
@@ -45,7 +40,7 @@ class _GroupScreenState extends State<GroupScreen> {
         .orderBy('createdDate', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         if (activities.containsKey(element.data()['groupID'])) {
           //  if(element.data()['description'].contains('Juz'))
           makelist += ',' + element.data()['description'];
@@ -56,17 +51,17 @@ class _GroupScreenState extends State<GroupScreen> {
           makelist = element.data()['description'];
           activities.putIfAbsent(element.data()['groupID'], () => makelist);
         }
-      });
+      }
     });
     // print(activities['vIMlQNVDThKr2P665R5Q']);
   }
 
   getUserColor() async {
     await FirebaseFirestore.instance.collection('Users').get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         userColor.putIfAbsent(
             element.data()['userName'], () => element.data()['hexColor']);
-      });
+      }
     });
     print(userColor);
   }
@@ -115,7 +110,7 @@ class _GroupScreenState extends State<GroupScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -123,14 +118,14 @@ class _GroupScreenState extends State<GroupScreen> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -170,13 +165,13 @@ class _GroupScreenState extends State<GroupScreen> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -198,7 +193,7 @@ class _GroupScreenState extends State<GroupScreen> {
     return Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/image/background.jpg"),
                 fit: BoxFit.cover,
@@ -220,7 +215,7 @@ class _GroupScreenState extends State<GroupScreen> {
                     MaterialPageRoute(builder: (context) => const addGroups()),
                   );
                 },
-                icon: Icon(Icons.add)),
+                icon: const Icon(Icons.add)),
             IconButton(
                 color: (widget.isfavourite == false) ? Colors.grey : Colors.red,
                 onPressed: () {
@@ -232,7 +227,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                   ? GroupScreen(true)
                                   : GroupScreen(false)));
                 },
-                icon: Icon(Icons.favorite))
+                icon: const Icon(Icons.favorite))
           ],
         ),
         body: Container(
@@ -264,7 +259,7 @@ class _GroupScreenState extends State<GroupScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(
+                                borderRadius: const BorderRadius.all(Radius.circular(
                                         5.0) //                 <--- border radius here
                                     ),
                                 border: Border.all(color: HexColor("#30652c"))),
@@ -286,11 +281,11 @@ class _GroupScreenState extends State<GroupScreen> {
                                               color: HexColor("#30652c"))),
                                     ),
                                   ),
-                                  Divider(),
+                                  const Divider(),
                                 ],
                               ),
                               footer: Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/image/background.jpg"),
@@ -308,7 +303,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                   ),
                                   trailing: IconButton(
                                     color: HexColor("#ffde59"),
-                                    icon: Icon(Icons.arrow_right_sharp),
+                                    icon: const Icon(Icons.arrow_right_sharp),
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -352,26 +347,26 @@ class _GroupScreenState extends State<GroupScreen> {
                         selectedItemColor: HexColor("#ffde59"),
                         items: [
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.home),
+                              icon: const Icon(Icons.home),
                               label: 'Home',
                               backgroundColor: HexColor('#2a6e2d')),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.list),
+                              icon: const Icon(Icons.list),
                               label: 'Juz List',
                               backgroundColor: HexColor('#2a6e2d')),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.format_list_numbered),
+                              icon: const Icon(Icons.format_list_numbered),
                               label: 'Count',
                               backgroundColor: HexColor('#2a6e2d')),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.group),
+                              icon: const Icon(Icons.group),
                               label: 'Groups',
                               backgroundColor: HexColor('#2a6e2d')),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.bookmark),
+                              icon: const Icon(Icons.bookmark),
                               label: 'Bookmarks',
                               backgroundColor: HexColor('#2a6e2d')),
-                          BottomNavigationBarItem(
+                          const BottomNavigationBarItem(
                               icon: Icon(Icons.panorama_fisheye_rounded),
                               label: 'Duas')
                         ],

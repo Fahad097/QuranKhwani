@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:custom_timer/custom_timer.dart';
 import 'package:qurankhwani/GameResult.dart';
 import 'package:qurankhwani/main.dart';
@@ -18,11 +16,11 @@ class _DragAndDropState extends State<DragAndDrop>  with TickerProviderStateMixi
    late CustomTimerController _controller;
 
 final ButtonStyle styleR = ElevatedButton.styleFrom(
-        primary: Colors.blueGrey, textStyle: const TextStyle(fontSize: 16));
+        backgroundColor: Colors.blueGrey, textStyle: const TextStyle(fontSize: 16));
 final ButtonStyle styleS = ElevatedButton.styleFrom(
-        primary: Colors.red[300], textStyle: const TextStyle(fontSize: 16));
+        backgroundColor: Colors.red[300], textStyle: const TextStyle(fontSize: 16));
 final ButtonStyle styleC = ElevatedButton.styleFrom(
-        primary: Colors.green[300], textStyle: const TextStyle(fontSize: 16));
+        backgroundColor: Colors.green[300], textStyle: const TextStyle(fontSize: 16));
 
  List<String> puzzleTiles = [
     'ج',
@@ -120,8 +118,8 @@ List<String> shuffledTiles = [];
   void initState() {
     _controller = CustomTimerController(
       vsync: this,
-      begin: Duration(seconds: 0),
-      end: Duration(hours: 2),
+      begin: const Duration(seconds: 0),
+      end: const Duration(hours: 2),
       initialState: CustomTimerState.reset,
       interval: CustomTimerInterval.milliseconds,
      );
@@ -139,9 +137,9 @@ List<String> shuffledTiles = [];
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
-                child: Text(
+                child: const Text(
                   'Drag and Drop',
                   style: TextStyle(
                       fontFamily: 'Schyler',
@@ -158,11 +156,11 @@ List<String> shuffledTiles = [];
                     order = int.parse(orders);
                   return Text(
                           "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                          style: TextStyle(fontSize: 24.0));
+                          style: const TextStyle(fontSize: 24.0));
                                    }),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 5,
                 ),
                 itemCount: shuffledTiles.length,
@@ -182,7 +180,7 @@ List<String> shuffledTiles = [];
                             child: Center(
                               child: Text(
                                 shuffledTiles[index],
-                                style: TextStyle( fontSize: 24),
+                                style: const TextStyle( fontSize: 24),
                               ),
                             ),
                           ),
@@ -192,7 +190,7 @@ List<String> shuffledTiles = [];
                               child: Center(
                                 child: Text(
                                   shuffledTiles[index],
-                                  style: TextStyle(color: Colors.white, fontSize: 24),
+                                  style: const TextStyle(color: Colors.white, fontSize: 24),
                                 ),
                               ),
                             ),
@@ -211,12 +209,12 @@ List<String> shuffledTiles = [];
                 ElevatedButton(
               style: styleR,
               onPressed: resetPuzzle,
-              child: Text('Reset',style: TextStyle(color: Colors.white)),
+              child: const Text('Reset',style: TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
               style: styleS,
               onPressed: shuffleTiles,
-              child: Text('Shuffle',style: TextStyle(color: Colors.white)),
+              child: const Text('Shuffle',style: TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
               style: styleC,
@@ -226,7 +224,7 @@ List<String> shuffledTiles = [];
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Arrangement Check'),
+                      title: const Text('Arrangement Check'),
                       content: Text(isArrangedCorrectly ? 'The tiles are arranged correctly!' : 'The tiles are not arranged correctly.'),
                       actions: [
                         TextButton(
@@ -252,14 +250,14 @@ List<String> shuffledTiles = [];
                             }
                          
                           },
-                          child: Text('OK'),
+                          child: const Text('OK'),
                         ),
                       ],
                     );
                   },
                 );
               },
-              child: Text('Check Arrangement',style: TextStyle(color: Colors.white),),
+              child: const Text('Check Arrangement',style: TextStyle(color: Colors.white),),
             ),
               ],
             )

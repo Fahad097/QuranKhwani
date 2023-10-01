@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:qurankhwani/RecordPage.dart';
 import 'package:qurankhwani/RecordSurahPage.dart';
 import 'package:qurankhwani/SurahLists.dart';
 import 'package:qurankhwani/bookmark_page.dart';
@@ -13,10 +12,7 @@ import 'package:qurankhwani/group_screen.dart';
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
 import 'package:qurankhwani/main.dart';
-import 'package:qurankhwani/pageRoute.dart';
-import 'package:zoom_widget/zoom_widget.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qurankhwani/homeScreen.dart' as list;
 
@@ -63,7 +59,7 @@ class _SurahPageViewState extends State<SurahPageView> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -71,13 +67,13 @@ class _SurahPageViewState extends State<SurahPageView> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SurahList()),
+        MaterialPageRoute(builder: (context) => const SurahList()),
       );
     }
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordSurahPage()),
+        MaterialPageRoute(builder: (context) => const RecordSurahPage()),
       );
     }
     if (index == 3) {
@@ -103,13 +99,13 @@ class _SurahPageViewState extends State<SurahPageView> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -126,7 +122,7 @@ class _SurahPageViewState extends State<SurahPageView> {
           .where("verseNo", isEqualTo: verseno)
           .snapshots()
           .listen((snapshot) {
-        if (snapshot.docs.length > 0) {
+        if (snapshot.docs.isNotEmpty) {
           print("working");
           _showMessageInScaffold("Already added bookmark");
           flag = false;
@@ -221,9 +217,9 @@ class _SurahPageViewState extends State<SurahPageView> {
     String res = '';
 
     final arabics = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    number.characters.forEach((element) {
+    for (var element in number.characters) {
       res += arabics[int.parse(element)];
-    });
+    }
 
 /*   final latins = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']; */
     return res;
@@ -240,14 +236,14 @@ class _SurahPageViewState extends State<SurahPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -303,7 +299,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
-                                  return new Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 }
@@ -335,20 +331,20 @@ class _SurahPageViewState extends State<SurahPageView> {
                                           _tapGestureRecognizer =
                                               LongPressGestureRecognizer();
                                           _tapGestureRecognizer
-                                            ..onLongPress = () {
+                                            .onLongPress = () {
                                               showDialog(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
                                                     return AlertDialog(
                                                       scrollable: true,
-                                                      title: Text("Options"),
+                                                      title: const Text("Options"),
                                                       content: Column(
                                                         children: [
-                                                          new ListTile(
-                                                              title: new Text(
+                                                          ListTile(
+                                                              title: const Text(
                                                                   'Add Bookmark'),
-                                                              trailing: Icon(
+                                                              trailing: const Icon(
                                                                   Icons
                                                                       .bookmark),
                                                               onTap: () {
@@ -368,11 +364,11 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                                         context)
                                                                     .pop();
                                                               }),
-                                                          Divider(),
-                                                          new ListTile(
-                                                              title: new Text(
+                                                          const Divider(),
+                                                          ListTile(
+                                                              title: const Text(
                                                                   'Show Word Content'),
-                                                              trailing: Icon(Icons
+                                                              trailing: const Icon(Icons
                                                                   .contact_page_outlined),
                                                               onTap: () {
                                                                 showDialog(
@@ -420,8 +416,9 @@ class _SurahPageViewState extends State<SurahPageView> {
                                         }
                                       }
                                       if (index + 1 ==
-                                          snapshot.data?.docs.length)
+                                          snapshot.data?.docs.length) {
                                         rowsChildrens.add(rowChildren);
+                                      }
                                       final display1 = Theme.of(context)
                                           .textTheme
                                           .headline6!
@@ -473,7 +470,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                     ),
                                                     (position + 1 == val)
                                                         ? IconButton(
-                                                            icon: Icon(
+                                                            icon: const Icon(
                                                                 Icons.done),
                                                             onPressed: () {
                                                               addActivities(
@@ -481,9 +478,9 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                                       .surahName,
                                                                   myName);
                                                               updateCounter();
-                                                              final snackBar =
+                                                              const snackBar =
                                                                   SnackBar(
-                                                                content: const Text(
+                                                                content: Text(
                                                                     'Surah Completed'),
                                                               );
                                                               ScaffoldMessenger
@@ -492,17 +489,17 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                                   .showSnackBar(
                                                                       snackBar);
                                                             })
-                                                        : SizedBox(
+                                                        : const SizedBox(
                                                             height: 0,
                                                           )
                                                   ],
                                                 )
-                                              : SizedBox(
+                                              : const SizedBox(
                                                   height: 0,
                                                 ),
                                           (index == 0)
-                                              ? Divider()
-                                              : SizedBox(height: 0),
+                                              ? const Divider()
+                                              : const SizedBox(height: 0),
                                           Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: (verseNo == 0)
@@ -521,7 +518,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                                 arabictextFontSize,
                                                           ), //ArabicFonts.amiri(textStyle: display1),
                                                         ),
-                                                        Divider()
+                                                        const Divider()
                                                       ],
                                                     )
                                                   : (index + 1 ==
@@ -534,7 +531,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                                                                       (rowChildren) =>
                                                                           Container(
                                                                             margin:
-                                                                                EdgeInsets.only(top: 10),
+                                                                                const EdgeInsets.only(top: 10),
                                                                             child: RichText(
                                                                                 textAlign: TextAlign.center,
                                                                                 text: TextSpan(
@@ -584,7 +581,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                       currentIndex: _selectedIndex,
                       onTap: _onItemTapped,
                       selectedItemColor: HexColor("#ffde59"),
-                      items: [
+                      items: const [
                         BottomNavigationBarItem(
                             icon: Icon(Icons.home), label: 'Home'),
                         BottomNavigationBarItem(

@@ -24,8 +24,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
     super.initState();
      _controller = CustomTimerController(
       vsync: this,
-      begin: Duration(seconds: 0),
-      end: Duration(hours: 2),
+      begin: const Duration(seconds: 0),
+      end: const Duration(hours: 2),
       initialState: CustomTimerState.reset,
       interval: CustomTimerInterval.milliseconds,
      );
@@ -114,13 +114,13 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Words Puzzle'),
+        title: const Text('Search Words Puzzle'),
       ),
       body:(wordsToFind == [])? const Center(
                         child: CircularProgressIndicator(),
                       ): Center(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
               CustomTimer(
@@ -132,9 +132,9 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
                     order = int.parse(orders);
                   return Text(
                           "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                          style: TextStyle(fontSize: 24.0));
+                          style: const TextStyle(fontSize: 24.0));
                                    }),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height - 400,
                 child: Expanded(
                   child: GridView.builder(
@@ -155,7 +155,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
                           child: Center(
                             child: Text(
                               letters[index],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20.0,
                               ),
                             ),
@@ -167,14 +167,14 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 'Words to Find',
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Expanded(
                 child: ListView.builder(
                   itemCount: wordsToFind.length,
@@ -189,13 +189,13 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
                         ),
                       ),
                       trailing: wordFound[index]
-                          ? Icon(Icons.check, color: Colors.green)
+                          ? const Icon(Icons.check, color: Colors.green)
                           : null,
                     );
                   },
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
              Row(
               mainAxisAlignment: MainAxisAlignment.start,
                children: [
@@ -219,15 +219,15 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
         MaterialPageRoute(
             builder: (BuildContext context) => super.widget));
                   });
-                 }, child: Text('Regenerate')),
-                 SizedBox(width: 10,),
+                 }, child: const Text('Regenerate')),
+                 const SizedBox(width: 10,),
                  ElevatedButton(onPressed: (){
                   _controller.pause();
-                 }, child: Text('Pause')),
-                 SizedBox(width: 10,),
+                 }, child: const Text('Pause')),
+                 const SizedBox(width: 10,),
                  ElevatedButton(onPressed: (){
                   _controller.start();
-                 }, child: Text('Start')),
+                 }, child: const Text('Start')),
                  
                ],
              )
@@ -254,7 +254,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
           
 
         },
-        child: Icon(Icons.lightbulb),
+        child: const Icon(Icons.lightbulb),
       ),
     );
   }

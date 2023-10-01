@@ -23,7 +23,7 @@ class _GameOptionState extends State<GameOption> {
   final myController = TextEditingController();
 
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
  @override
   void initState() {
     pageCount = 1;
@@ -50,14 +50,14 @@ class _GameOptionState extends State<GameOption> {
               child: Center(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
                   "assets/image/Qurankhwani.png",
                   height: 200,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -80,10 +80,10 @@ class _GameOptionState extends State<GameOption> {
                         color: HexColor("#2a6e2d")),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Form(
@@ -100,7 +100,7 @@ class _GameOptionState extends State<GameOption> {
                                 color: HexColor("#2a6e2d")),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
@@ -145,7 +145,7 @@ class _GameOptionState extends State<GameOption> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
@@ -154,7 +154,7 @@ class _GameOptionState extends State<GameOption> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => (widget.value == 'Game')?GamePageView():(widget.value == 'Guess the Voice')?GuessTheVoice():JigsawPuzzles()),
+                                  builder: (context) => (widget.value == 'Game')?const GamePageView():(widget.value == 'Guess the Voice')?const GuessTheVoice():const JigsawPuzzles()),
                             );
                           },
                           child: const Text(

@@ -2,11 +2,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:flutter/material.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as char;
 import 'package:qurankhwani/GameResult.dart';
-import 'package:qurankhwani/GuessTheVoice.dart';
-import 'package:qurankhwani/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as val;
@@ -26,7 +23,7 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
   int render = 0;
   var questionList = [];
    final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   
   @override
   Widget build(BuildContext context) {
@@ -34,11 +31,11 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
         body: Container(
            
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                child: Text(
+                child: const Text(
                   'Guess The Meaning',
                   style: TextStyle(
                       fontFamily: 'Schyler',
@@ -68,12 +65,12 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (!snapshot.hasData) {
-                                      return new Center(
+                                      return const Center(
                                         child: CircularProgressIndicator(),
                                       );
                                     }
                                      if (question == '') {
-                            Future.delayed(Duration(seconds: 3), () {
+                            Future.delayed(const Duration(seconds: 3), () {
                               setState(() {
                                 randomQ =
                                     Random().nextInt(questionList.length);
@@ -94,9 +91,10 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
                                                   ds =
                                                   snapshot.data?.docs[random];
                                               String element = ds!["English Meaning"];
-                                              String Aelement = ds!["Arabic Word"];
-                                              if (render == 0)
+                                              String Aelement = ds["Arabic Word"];
+                                              if (render == 0) {
                                                 questionList.add({'element': element,'Aelement': Aelement});
+                                              }
                                               return ListTile(
                                                 title: Text(
                                                   questionList[index]['element'],
@@ -114,9 +112,10 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
                                                       answer = value.toString();
                                                       render++;
                                                      
-                                                        if (question == '')
-                                              randomQ = Random()
+                                                        if (question == '') {
+                                                          randomQ = Random()
                                                   .nextInt(questionList.length);
+                                                        }
 
                                             question = questionList[randomQ]['element'];
                                                     });
@@ -124,14 +123,14 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
                                                 ),
                                               );
                                             }),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 200,
                                         ),
-                                         (question == '')?new Center(
+                                         (question == '')?const Center(
                                         child: CircularProgressIndicator(),
                                       ):Text(
                                                           questionList[randomQ]['Aelement'],
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 56,
                                                               fontFamily:
                                                                   'Al Qalam Quran'),
@@ -181,39 +180,41 @@ class _GuesstheMeaningState extends State<GuesstheMeaning> {
                                               val.result++;
                                               val.pageCount++;
                                               tts.speak('Correct Answer');
-                                              if (val.pageCount >= 6)
+                                              if (val.pageCount >= 6) {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           GameResult('Guess the Meaning',0,0)),
                                                 );
-                                              else
+                                              } else {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          GuesstheMeaning()),
+                                                          const GuesstheMeaning()),
                                                 );
-                                            } else if (question == '')
+                                              }
+                                            } else if (question == '') {
                                               tts.speak('Please Select Option');
-                                            else {
+                                            } else {
                                               val.pageCount++;
                                               tts.speak('Wrong Answer');
-                                              if (val.pageCount >= 6)
+                                              if (val.pageCount >= 6) {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           GameResult('Guess the Meaning',0,0)),
                                                 );
-                                              else
+                                              } else {
                                                 Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          GuesstheMeaning()),
+                                                          const GuesstheMeaning()),
                                                 );
+                                              }
                                             }
                                           },
                                           child: const Text(

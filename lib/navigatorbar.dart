@@ -21,7 +21,7 @@ class NavigationBarState extends State<NavigationBars> {
         currentIndex: NavigationBars._selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
-        backgroundColor: Color(
+        backgroundColor: const Color(
             0x44aaaaff), // transparent, you could use 0x44aaaaff to make it slightly less transparent with a blue hue.
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.blue,

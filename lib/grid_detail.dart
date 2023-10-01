@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,8 +51,9 @@ class _GridDetailState extends State<GridDetail> {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
     setState(() {
-      for (var i = 0; i < allData.length; i++)
+      for (var i = 0; i < allData.length; i++) {
         email += allData[i]['email'] + ',';
+      }
     });
   }
 
@@ -106,7 +106,7 @@ class _GridDetailState extends State<GridDetail> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -114,14 +114,14 @@ class _GridDetailState extends State<GridDetail> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -161,13 +161,13 @@ class _GridDetailState extends State<GridDetail> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -177,7 +177,7 @@ class _GridDetailState extends State<GridDetail> {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover,
@@ -222,10 +222,10 @@ class _GridDetailState extends State<GridDetail> {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                MyHomePage(title: "Quran Khwani")));
+                                const MyHomePage(title: "Quran Khwani")));
                   },
-                  icon: Icon(Icons.delete))
-              : SizedBox(
+                  icon: const Icon(Icons.delete))
+              : const SizedBox(
                   height: 0,
                 ),
           (widget.myID == widget.userID)
@@ -238,8 +238,8 @@ class _GridDetailState extends State<GridDetail> {
                           builder: (context) => GridEdit(widget.id)),
                     );
                   },
-                  icon: Icon(Icons.edit))
-              : SizedBox(),
+                  icon: const Icon(Icons.edit))
+              : const SizedBox(),
           (widget.myID == widget.userID)
               ? IconButton(
                   color: Colors.grey,
@@ -250,8 +250,8 @@ class _GridDetailState extends State<GridDetail> {
                           builder: (context) => RequestPage(widget.id)),
                     );
                   },
-                  icon: Icon(Icons.request_quote))
-              : SizedBox(),
+                  icon: const Icon(Icons.request_quote))
+              : const SizedBox(),
           (widget.myID != widget.userID)
               ? IconButton(
                   color: Colors.green,
@@ -270,9 +270,9 @@ class _GridDetailState extends State<GridDetail> {
                         .where('groupID', isEqualTo: widget.id)
                         .get()
                         .then((value) {
-                      if (value.docs.length != 0) {
-                        final snackBar = SnackBar(
-                          content: const Text('You are already Added'),
+                      if (value.docs.isNotEmpty) {
+                        const snackBar = SnackBar(
+                          content: Text('You are already Added'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
@@ -282,14 +282,14 @@ class _GridDetailState extends State<GridDetail> {
                           'groupID': widget.id,
                           'userName': myName
                         });
-                        final snackBar = SnackBar(
-                          content: const Text('Added to this Group'),
+                        const snackBar = SnackBar(
+                          content: Text('Added to this Group'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     });
                   },
-                  icon: Icon(Icons.send_outlined))
+                  icon: const Icon(Icons.send_outlined))
               : IconButton(
                   color: Colors.green,
                   onPressed: () async {
@@ -299,7 +299,7 @@ class _GridDetailState extends State<GridDetail> {
                           builder: (context) => AddUser(widget.id)),
                     );
                   },
-                  icon: Icon(Icons.send_outlined)),
+                  icon: const Icon(Icons.send_outlined)),
         ],
       ),
       body: FutureBuilder(
@@ -322,7 +322,7 @@ class _GridDetailState extends State<GridDetail> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -332,11 +332,11 @@ class _GridDetailState extends State<GridDetail> {
                         color: HexColor("#30652c"),
                         fontFamily: 'Schyler'),
                   ),
-                  Divider(),
+                  const Divider(),
                   Center(
                     child: CircleAvatar(
                       radius: 60,
-                      backgroundColor: Color(0xffFDCF09),
+                      backgroundColor: const Color(0xffFDCF09),
                       child:
                           //  image != null
                           //     ? ClipRRect(
@@ -364,7 +364,7 @@ class _GridDetailState extends State<GridDetail> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -374,7 +374,7 @@ class _GridDetailState extends State<GridDetail> {
                         color: HexColor("#30652c"),
                         fontFamily: 'Schyler'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -401,7 +401,7 @@ class _GridDetailState extends State<GridDetail> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Flexible(
@@ -424,8 +424,8 @@ class _GridDetailState extends State<GridDetail> {
                       ))
                     ],
                   ),
-                  Divider(),
-                  SizedBox(
+                  const Divider(),
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -446,8 +446,8 @@ class _GridDetailState extends State<GridDetail> {
                           fontFamily: 'Schyler'),
                     ),
                   ),
-                  Divider(),
-                  SizedBox(
+                  const Divider(),
+                  const SizedBox(
                     height: 10,
                   ),
 
@@ -498,7 +498,7 @@ class _GridDetailState extends State<GridDetail> {
                         color: HexColor("#30652c"),
                         fontFamily: 'Schyler'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Padding(
@@ -519,8 +519,9 @@ class _GridDetailState extends State<GridDetail> {
                                   onTap: () {
                                     FlutterTts tts = FlutterTts();
                                     //  tts.setLanguage("ar-SA");
-                                    if (infoUser[juzCheck] != null)
+                                    if (infoUser[juzCheck] != null) {
                                       tts.speak(infoUser[juzCheck].toString());
+                                    }
                                   },
                                   child: Container(
                                     //width: MediaQuery.of(context).size.width/8.6,
@@ -538,7 +539,7 @@ class _GridDetailState extends State<GridDetail> {
                                         Center(
                                             child: Text(
                                           counts.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.black),
                                         )),
@@ -562,26 +563,26 @@ class _GridDetailState extends State<GridDetail> {
                             selectedItemColor: HexColor("#ffde59"),
                             items: [
                               BottomNavigationBarItem(
-                                  icon: Icon(Icons.home),
+                                  icon: const Icon(Icons.home),
                                   label: 'Home',
                                   backgroundColor: HexColor('#2a6e2d')),
                               BottomNavigationBarItem(
-                                  icon: Icon(Icons.list),
+                                  icon: const Icon(Icons.list),
                                   label: 'Juz List',
                                   backgroundColor: HexColor('#2a6e2d')),
                               BottomNavigationBarItem(
-                                  icon: Icon(Icons.format_list_numbered),
+                                  icon: const Icon(Icons.format_list_numbered),
                                   label: 'Count',
                                   backgroundColor: HexColor('#2a6e2d')),
                               BottomNavigationBarItem(
-                                  icon: Icon(Icons.group),
+                                  icon: const Icon(Icons.group),
                                   label: 'Groups',
                                   backgroundColor: HexColor('#2a6e2d')),
                               BottomNavigationBarItem(
-                                  icon: Icon(Icons.bookmark),
+                                  icon: const Icon(Icons.bookmark),
                                   label: 'bookmarks',
                                   backgroundColor: HexColor('#2a6e2d')),
-                              BottomNavigationBarItem(
+                              const BottomNavigationBarItem(
                                   icon: Icon(Icons.panorama_fisheye_rounded),
                                   label: 'Duas')
                             ],

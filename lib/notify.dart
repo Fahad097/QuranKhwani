@@ -8,7 +8,7 @@ import 'package:qurankhwani/main.dart' as data;
 class NotificationServices {
   
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final AndroidInitializationSettings  _androidInitializationSettings  = AndroidInitializationSettings('logo');
+  final AndroidInitializationSettings  _androidInitializationSettings  = const AndroidInitializationSettings('logo');
   
  
   
@@ -81,16 +81,21 @@ var date = DateTime.now();
     // Schedule notification for each prayer time
     for (var i = 0; i < prayerNames.length; i++) {
       final prayerName = prayerNames[i];
-      if(prayerName == 'Fajr')
-      prayerTime = tz.TZDateTime.from(prayerTimes.fajr!, data.location);
-      if(prayerName == 'Dhuhr')
-      prayerTime = tz.TZDateTime.from(prayerTimes.dhuhr!, data.location);
-      if(prayerName == 'Asr')
-      prayerTime = tz.TZDateTime.from(prayerTimes.asr!, data.location);
-      if(prayerName == 'Maghrib')
-       prayerTime = tz.TZDateTime.from(prayerTimes.maghrib!, data.location);
-      if(prayerName == 'Isha')
-  prayerTime = tz.TZDateTime.from(prayerTimes.isha!, data.location);
+      if(prayerName == 'Fajr') {
+        prayerTime = tz.TZDateTime.from(prayerTimes.fajr!, data.location);
+      }
+      if(prayerName == 'Dhuhr') {
+        prayerTime = tz.TZDateTime.from(prayerTimes.dhuhr!, data.location);
+      }
+      if(prayerName == 'Asr') {
+        prayerTime = tz.TZDateTime.from(prayerTimes.asr!, data.location);
+      }
+      if(prayerName == 'Maghrib') {
+        prayerTime = tz.TZDateTime.from(prayerTimes.maghrib!, data.location);
+      }
+      if(prayerName == 'Isha') {
+        prayerTime = tz.TZDateTime.from(prayerTimes.isha!, data.location);
+      }
 
     // Subtract a notification lead time (e.g., 15 minutes) from the prayer time
   //  final notificationTime = prayerTime!.subtract(Duration(minutes: 15));
@@ -109,7 +114,7 @@ print(tzDateTime);
       i,
       'Upcoming Prayer',
       'It is almost time for $prayerName prayer.',
-      tzDateTime.subtract(Duration(minutes: 2)),
+      tzDateTime.subtract(const Duration(minutes: 2)),
       (prayerName == 'Fajr')?fajrnotificationDetails:notificationDetails,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:

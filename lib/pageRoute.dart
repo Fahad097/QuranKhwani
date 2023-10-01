@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:qurankhwani/SurahLists.dart';
 import 'package:qurankhwani/juzLists.dart';
@@ -14,7 +13,7 @@ class PageRouteJuzScreen extends StatefulWidget {
 class _PageRouteJuzScreenState extends State<PageRouteJuzScreen> {
   @override
   Widget build(BuildContext context) {
-    return JuzList();
+    return const JuzList();
     //return PageView(
     //  children: [JuzList(), SurahList()],
     //);
@@ -31,7 +30,7 @@ class PageRouteSurahScreen extends StatefulWidget {
 class _PageRouteSurahScreenState extends State<PageRouteSurahScreen> {
   @override
   Widget build(BuildContext context) {
-    return SurahList();
+    return const SurahList();
     //return PageView(
     //  children: [JuzList(), SurahList()],
     //);

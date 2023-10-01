@@ -1,8 +1,6 @@
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:qurankhwani/homeScreen.dart' as data;
 
@@ -21,13 +19,13 @@ class _QaidaPageViewState extends State<QaidaPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/image/background.jpg"),
                   fit: BoxFit.cover),
             ),
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -80,7 +78,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                         ',' +
                                                         r.toString()]
                                                 .toString();
-                                            var valueSplit;
+                                            List<String>? valueSplit;
                                             var splitFlag = true;
                                             print(data.record[widget.index
                                                             .toString() +
@@ -136,7 +134,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                   c != 1) {
                                                 return Column(
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 50,
                                                     ),
                                                     Container(
@@ -160,7 +158,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                             FlutterTts tts =
                                                                 FlutterTts();
                                                             tts.setLanguage(
-                                                                "ur-PK");
+                                                                "ar-SA");
                                                             if (data.elements[widget
                                                                             .index
                                                                             .toString() +
@@ -211,7 +209,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       child:
                                                                           Text(
                                                                     value,
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         fontSize:
                                                                             36,
                                                                         fontWeight:
@@ -227,7 +225,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                             child:
                                                                                 Text(
                                                                           value,
-                                                                          style: TextStyle(
+                                                                          style: const TextStyle(
                                                                               fontSize: 36,
                                                                               fontWeight: FontWeight.bold),
                                                                         )),
@@ -237,27 +235,27 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                           text:
                                                                               TextSpan(
                                                                             style:
-                                                                                TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                                                                                const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                                                                             children: <TextSpan>[
                                                                               if (value != 'هَ ل')
                                                                                 TextSpan(
-                                                                                  text: valueSplit[0],
-                                                                                  style: TextStyle(color: Colors.white),
+                                                                                  text: valueSplit![0],
+                                                                                  style: const TextStyle(color: Colors.white),
                                                                                 ),
                                                                               if (value != 'هَ ل')
                                                                                 TextSpan(
-                                                                                  text: valueSplit[1],
-                                                                                  style: TextStyle(color: Colors.black),
+                                                                                  text: valueSplit![1],
+                                                                                  style: const TextStyle(color: Colors.black),
                                                                                 ),
                                                                               if (value == 'هَ ل')
                                                                                 TextSpan(
-                                                                                  text: valueSplit[0],
-                                                                                  style: TextStyle(color: Colors.black),
+                                                                                  text: valueSplit![0],
+                                                                                  style: const TextStyle(color: Colors.black),
                                                                                 ),
                                                                               if (value == 'هَ ل')
                                                                                 TextSpan(
-                                                                                  text: valueSplit[1],
-                                                                                  style: TextStyle(color: Colors.white),
+                                                                                  text: valueSplit![1],
+                                                                                  style: const TextStyle(color: Colors.white),
                                                                                 ),
 
                                                                               // continue adding TextSpans for each letter in the text
@@ -267,11 +265,11 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       Center(
                                                                           child:
                                                                               Text(
-                                                                        data.meanings[widget.index.toString() + ',' + c.toString()]![widget.index.toString() +
+                                                                        data.EnglishMeanings[widget.index.toString() + ',' + c.toString()]![widget.index.toString() +
                                                                                 ',' +
                                                                                 r.toString()]
                                                                             .toString(),
-                                                                        style: TextStyle(
+                                                                        style: const TextStyle(
                                                                             fontSize:
                                                                                 16,
                                                                             color:
@@ -281,7 +279,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                   ),
                                                                 Center(
                                                                     child: Text(
-                                                                  data.meanings[widget
+                                                                  data.EnglishMeanings[widget
                                                                               .index
                                                                               .toString() +
                                                                           ',' +
@@ -291,7 +289,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                           ',' +
                                                                           r.toString()]
                                                                       .toString(),
-                                                                  style: TextStyle(
+                                                                  style: const TextStyle(
                                                                       fontSize:
                                                                           16,
                                                                       color: Colors
@@ -317,7 +315,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                       print(
                                                           isLanguageAvailable);
 
-                                                      tts.setLanguage("ur-PK");
+                                                      tts.setLanguage("ar-PK");
                                                       if (data.elements[widget
                                                                       .index
                                                                       .toString() +
@@ -363,7 +361,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                             Center(
                                                                 child: Text(
                                                               value,
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 36,
                                                                   fontWeight:
                                                                       FontWeight
@@ -373,7 +371,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                               false)
                                                             RichText(
                                                               text: TextSpan(
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         36,
                                                                     fontWeight:
@@ -385,9 +383,9 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       'هَ ل')
                                                                     TextSpan(
                                                                       text:
-                                                                          valueSplit[
+                                                                          valueSplit![
                                                                               0],
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               Colors.white),
                                                                     ),
@@ -395,9 +393,9 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       'هَ ل')
                                                                     TextSpan(
                                                                       text:
-                                                                          valueSplit[
+                                                                          valueSplit![
                                                                               1],
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               Colors.black),
                                                                     ),
@@ -405,9 +403,9 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       'هَ ل')
                                                                     TextSpan(
                                                                       text:
-                                                                          valueSplit[
+                                                                          valueSplit![
                                                                               0],
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               Colors.black),
                                                                     ),
@@ -415,9 +413,9 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                       'هَ ل')
                                                                     TextSpan(
                                                                       text:
-                                                                          valueSplit[
+                                                                          valueSplit![
                                                                               1],
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               Colors.white),
                                                                     ),
@@ -428,7 +426,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                             ),
                                                           Center(
                                                               child: Text(
-                                                            data.meanings[widget
+                                                            data.EnglishMeanings[widget
                                                                         .index
                                                                         .toString() +
                                                                     ',' +
@@ -438,7 +436,7 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                                     ',' +
                                                                     r.toString()]
                                                                 .toString(),
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontSize: 16,
                                                                 color: Colors
                                                                     .grey),
@@ -447,13 +445,14 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                                                       ),
                                                     ),
                                                   ));
-                                            } else
+                                            } else {
                                               return SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
                                                     3.9,
                                               );
+                                            }
                                           }),
                                         ),
                                       ),
@@ -492,6 +491,5 @@ class _QaidaPageViewState extends State<QaidaPageView> {
                             )),
                           )))),
             ])));
-    ;
   }
 }

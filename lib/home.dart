@@ -1,14 +1,12 @@
 //import 'package:animated_drawer/views/animated_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:qurankhwani/MyDrawer.dart';
 import 'package:qurankhwani/homeScreen.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MyHomePage(
+    return const MyHomePage(
       title: 'Quran Khwani',
     );
     // return AnimatedDrawer(

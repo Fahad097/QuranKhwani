@@ -3,24 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/RecordPage.dart';
-import 'package:qurankhwani/SurahLists.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
 import 'package:qurankhwani/group_screen.dart';
-import 'package:qurankhwani/home.dart';
 import 'package:qurankhwani/homeScreen.dart' as list;
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
 import 'package:qurankhwani/juzPageView.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:qurankhwani/pageRoute.dart';
-import 'package:qurankhwani/surahPageView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qurankhwani/main.dart' as data;
 
 class JuzList extends StatefulWidget {
-  JuzList();
+  const JuzList();
 
   @override
   State<JuzList> createState() => _JuzListState();
@@ -43,20 +40,21 @@ class _JuzListState extends State<JuzList> {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData)
-                return new Center(
+              if (!snapshot.hasData) {
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
-              if (snapshot.data!.docs.length == 0) {
-                return SizedBox(
+              }
+              if (snapshot.data!.docs.isEmpty) {
+                return const SizedBox(
                   height: 0,
                 );
-              } else
+              } else {
                 return Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 68,
-                      child: new ListView.builder(
+                      child: ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
@@ -78,13 +76,13 @@ class _JuzListState extends State<JuzList> {
                               child: (title != '')
                                   ? Center(
                                       child: Card(
-                                          margin: EdgeInsets.all(8),
+                                          margin: const EdgeInsets.all(8),
 
                                           //  height: 50,
                                           // width: 100,
                                           color: HexColor("#ffde59"),
                                           child: Padding(
-                                              padding: EdgeInsets.all(12),
+                                              padding: const EdgeInsets.all(12),
                                               child: Center(
                                                   child: Text(
                                                       title +
@@ -101,7 +99,7 @@ class _JuzListState extends State<JuzList> {
                                                             HexColor("#2a6e2d"),
                                                         fontFamily: 'Schyler',
                                                       ))))))
-                                  : Center(
+                                  : const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                               onTap: () {
@@ -123,6 +121,7 @@ class _JuzListState extends State<JuzList> {
                     ),
                   ],
                 );
+              }
             }),
       ),
     );
@@ -174,7 +173,6 @@ class _JuzListState extends State<JuzList> {
           dummyListJuzEndPages.add(dummySearchJuzEndPages[i]);
         }
       }
-      ;
       setState(() {
         items.clear();
         itemsAr.clear();
@@ -214,7 +212,7 @@ class _JuzListState extends State<JuzList> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -222,14 +220,14 @@ class _JuzListState extends State<JuzList> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -269,13 +267,13 @@ class _JuzListState extends State<JuzList> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -285,14 +283,14 @@ class _JuzListState extends State<JuzList> {
     var textscale = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -304,7 +302,7 @@ class _JuzListState extends State<JuzList> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 65),
+                margin: const EdgeInsets.only(left: 65),
                 child: Text(
                   "Juz List",
                   style: TextStyle(
@@ -316,7 +314,7 @@ class _JuzListState extends State<JuzList> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
@@ -361,7 +359,7 @@ class _JuzListState extends State<JuzList> {
                         );
                 return Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     GestureDetector(
@@ -371,7 +369,7 @@ class _JuzListState extends State<JuzList> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => JuzPageView(
-                                  '${items[index]}',
+                                  items[index],
                                   JuzNo[index].toString(),
                                   '',
                                   JuzPage[index].toString(),
@@ -420,7 +418,7 @@ class _JuzListState extends State<JuzList> {
                     currentIndex: _selectedIndex,
                     onTap: _onItemTapped,
                     selectedItemColor: HexColor("#ffde59"),
-                    items: [
+                    items: const [
                       BottomNavigationBarItem(
                           icon: Icon(Icons.home), label: 'Home'),
                       BottomNavigationBarItem(

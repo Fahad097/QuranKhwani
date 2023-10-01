@@ -6,7 +6,6 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:qurankhwani/InitState.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -32,23 +31,19 @@ String time = '';
 int order = 0;
 getMethod() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  dropdownvalue = (await prefs.getString('saveMethod'))!;
+  dropdownvalue = (prefs.getString('saveMethod'))!;
 }
 
 getFontSize() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  textFontSize = (await prefs.getDouble('saveTextFont'))!;
-  if (textFontSize == null) {
-    textFontSize = 20;
-  }
+  textFontSize = (prefs.getDouble('saveTextFont'))!;
+  textFontSize ??= 20;
 }
 
 getArabicFontSize() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  arabictextFontSize = (await prefs.getDouble('saveArabictextFont'))!;
-  if (arabictextFontSize == null) {
-    arabictextFontSize = 30;
-  }
+  arabictextFontSize = (prefs.getDouble('saveArabictextFont'))!;
+  arabictextFontSize ??= 30;
 }
 
 getUserId() async {
@@ -110,11 +105,11 @@ getLocationFromCache() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (location == null) {
     tz.initializeTimeZones();
-    String dtz = (await prefs.getString('saveLocation'))!;
+    String dtz = (prefs.getString('saveLocation'))!;
     print('getting location');
 
-    double lat = (await prefs.getDouble('saveLatitude'))!;
-    double lon = (await prefs.getDouble('saveLongitude'))!;
+    double lat = (prefs.getDouble('saveLatitude'))!;
+    double lon = (prefs.getDouble('saveLongitude'))!;
 
     location = tz.getLocation(dtz);
     coordinates = Coordinates(lat, lon);
@@ -149,7 +144,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: HexColor("#ffde59"),
         scaffoldBackgroundColor: HexColor("#ffffff"),
         textTheme: TextTheme(
-            headline1: TextStyle(
+            headline1: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
             headline2: TextStyle(
                 fontSize: 20,
@@ -167,7 +162,7 @@ class _MyAppState extends State<MyApp> {
               //  onBackground: HexColor("#d8ec9c"),
             ),
       ),
-      home: InitState(),
+      home: const InitState(),
     );
   }
 }

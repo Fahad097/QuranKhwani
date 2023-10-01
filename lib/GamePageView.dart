@@ -3,7 +3,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/material.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as char;
 import 'package:qurankhwani/GameResult.dart';
-import 'package:qurankhwani/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/GameOptionPage.dart' as val;
@@ -23,17 +22,17 @@ class _GamePageViewState extends State<GamePageView> {
    int render = 0;
   var questionList = [];
    final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                child: Text(
+                child: const Text(
                   'Quran Quiz',
                   style: TextStyle(
                       fontFamily: 'Schyler',
@@ -69,7 +68,7 @@ class _GamePageViewState extends State<GamePageView> {
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (!snapshot.hasData) {
-                                        return new Center(
+                                        return const Center(
                                           child: CircularProgressIndicator(),
                                         );
                                       }
@@ -85,8 +84,9 @@ class _GamePageViewState extends State<GamePageView> {
                                                     ds =
                                                     snapshot.data?.docs[random];
                                                 String element = ds!["element"];
-                                                if(render == 0)
-                                                questionList.add(element);
+                                                if(render == 0) {
+                                                  questionList.add(element);
+                                                }
                                                 return ListTile(
                                                   title: Text(
                                                     questionList[index],
@@ -105,8 +105,9 @@ class _GamePageViewState extends State<GamePageView> {
                                                         answer =
                                                             value.toString();
                                                         render++;
-                                                          if(question == '')
-                            randomQ = Random().nextInt(questionList.length);
+                                                          if(question == '') {
+                                                            randomQ = Random().nextInt(questionList.length);
+                                                          }
 
                             question = questionList[randomQ];
                                                       });
@@ -114,12 +115,13 @@ class _GamePageViewState extends State<GamePageView> {
                                                   ),
                                                 );
                                               }),
-                                          SizedBox(height: 200,),
+                                          const SizedBox(height: 200,),
                                             ElevatedButton(
                           style: style,
                           onPressed: () async {
-                                if(question == '')
-                            randomQ = Random().nextInt(questionList.length);
+                                if(question == '') {
+                                  randomQ = Random().nextInt(questionList.length);
+                                }
 
                             question = questionList[randomQ];
                            
@@ -149,36 +151,38 @@ class _GamePageViewState extends State<GamePageView> {
                               val.result++;
                                val.pageCount++;
                               tts.speak('Correct Answer');
-                              if( val.pageCount >= 6)
-                               Navigator.pushReplacement(
+                              if( val.pageCount >= 6) {
+                                Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => GameResult('Quran Quiz',0,0)),
                             );
-                            else
-                              Navigator.pushReplacement(
+                              } else {
+                                Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => GamePageView()),
+                                  builder: (context) => const GamePageView()),
                             );
+                              }
                             }
-                            else if (question == '')
-                             tts.speak('Please Select Option');
-                             else{
+                            else if (question == '') {
+                              tts.speak('Please Select Option');
+                            } else{
                                val.pageCount++;
                                tts.speak('Wrong Answer');
-                             if( val.pageCount >= 6)
+                             if( val.pageCount >= 6) {
                                Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => GameResult('Quran Quiz',0,0)),
                             );
-                            else
-                              Navigator.pushReplacement(
+                             } else {
+                               Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => GamePageView()),
+                                  builder: (context) => const GamePageView()),
                             );
+                             }
                              }   
                            
                           }, child: const Text(

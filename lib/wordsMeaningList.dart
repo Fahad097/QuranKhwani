@@ -23,14 +23,14 @@ class _WordMeaningListState extends State<WordMeaningList> {
                         );
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -42,7 +42,7 @@ class _WordMeaningListState extends State<WordMeaningList> {
                   },
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 55),
+                  margin: const EdgeInsets.only(left: 55),
                   child: Text(
                     "Quranic Words",
                     style: TextStyle(
@@ -62,7 +62,7 @@ class _WordMeaningListState extends State<WordMeaningList> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (!snapshot.hasData) {
-                                      return new Center(
+                                      return const Center(
                                         child: CircularProgressIndicator(),
                                       );
                                     }

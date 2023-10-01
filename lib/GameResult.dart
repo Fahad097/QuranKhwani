@@ -20,7 +20,7 @@ class _GameResultState extends State<GameResult> {
   final myController = TextEditingController();
 
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   @override
   void initState() {
     loadResult();
@@ -94,14 +94,14 @@ class _GameResultState extends State<GameResult> {
               child: Center(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
                   "assets/image/Qurankhwani.png",
                   height: 200,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -114,10 +114,10 @@ class _GameResultState extends State<GameResult> {
                         color: HexColor("#2a6e2d")),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Form(
@@ -134,7 +134,7 @@ class _GameResultState extends State<GameResult> {
                                 color: HexColor("#2a6e2d")),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Center(
@@ -152,7 +152,7 @@ class _GameResultState extends State<GameResult> {
                                 color: HexColor("#2a6e2d")),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(

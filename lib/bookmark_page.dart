@@ -28,7 +28,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -36,14 +36,14 @@ class _BookmarkPageState extends State<BookmarkPage> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -83,13 +83,13 @@ class _BookmarkPageState extends State<BookmarkPage> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -99,7 +99,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
     return Scaffold(
       appBar: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/image/background.jpg"),
                 fit: BoxFit.cover,
@@ -115,13 +115,13 @@ class _BookmarkPageState extends State<BookmarkPage> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MyHomePage(
+                      builder: (context) => const MyHomePage(
                             title: 'Quran Khwani',
                           )),
                   (Route<dynamic> route) => false,
                 );
               },
-              icon: Icon(Icons.arrow_back_sharp))),
+              icon: const Icon(Icons.arrow_back_sharp))),
       body: FutureBuilder(
           future: FirebaseFirestore.instance
               .collection('Bookmarks')
@@ -165,13 +165,13 @@ class _BookmarkPageState extends State<BookmarkPage> {
                               child: (title != '')
                                   ? Center(
                                       child: Card(
-                                          margin: EdgeInsets.all(8),
+                                          margin: const EdgeInsets.all(8),
 
                                           //  height: 50,
                                           // width: 100,
                                           color: HexColor("#ffde59"),
                                           child: Padding(
-                                              padding: EdgeInsets.all(12),
+                                              padding: const EdgeInsets.all(12),
                                               child: Center(
                                                   child: Text(
                                                       title +
@@ -189,7 +189,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                                         fontFamily: 'Schyler',
                                                         fontSize: textFontSize,
                                                       ))))))
-                                  : Center(
+                                  : const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                               onLongPress: () {
@@ -199,7 +199,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         scrollable: true,
-                                        title: Text(
+                                        title: const Text(
                                             'Are you sure to delete this Bookmark?'),
                                         actions: <Widget>[
                                           Row(
@@ -217,7 +217,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            BookmarkPage()),
+                                                            const BookmarkPage()),
                                                     (Route<dynamic> route) =>
                                                         false,
                                                   );
@@ -267,26 +267,26 @@ class _BookmarkPageState extends State<BookmarkPage> {
                           selectedItemColor: HexColor("#ffde59"),
                           items: [
                             BottomNavigationBarItem(
-                                icon: Icon(Icons.home),
+                                icon: const Icon(Icons.home),
                                 label: 'Home',
                                 backgroundColor: HexColor('#2a6e2d')),
                             BottomNavigationBarItem(
-                                icon: Icon(Icons.list),
+                                icon: const Icon(Icons.list),
                                 label: 'Juz List',
                                 backgroundColor: HexColor('#2a6e2d')),
                             BottomNavigationBarItem(
-                                icon: Icon(Icons.format_list_numbered),
+                                icon: const Icon(Icons.format_list_numbered),
                                 label: 'Count',
                                 backgroundColor: HexColor('#2a6e2d')),
                             BottomNavigationBarItem(
-                                icon: Icon(Icons.group),
+                                icon: const Icon(Icons.group),
                                 label: 'Groups',
                                 backgroundColor: HexColor('#2a6e2d')),
                             BottomNavigationBarItem(
-                                icon: Icon(Icons.bookmark),
+                                icon: const Icon(Icons.bookmark),
                                 label: 'Bookmarks',
                                 backgroundColor: HexColor('#2a6e2d')),
-                            BottomNavigationBarItem(
+                            const BottomNavigationBarItem(
                                 icon: Icon(Icons.panorama_fisheye_rounded),
                                 label: 'Duas'),
                           ],

@@ -10,9 +10,7 @@ import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:qurankhwani/pageRoute.dart';
-import 'package:zoom_widget/zoom_widget.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qurankhwani/homeScreen.dart' as list;
 import 'package:flutter/gestures.dart';
@@ -60,7 +58,7 @@ class _JuzPageViewState extends State<JuzPageView> {
           .where("verseno", isEqualTo: verseNo)
           .snapshots()
           .listen((snapshot) {
-        if (snapshot.docs.length > 0) {
+        if (snapshot.docs.isNotEmpty) {
           print("working");
 
           _showMessageInScaffold("Already Added bookmark");
@@ -128,7 +126,7 @@ class _JuzPageViewState extends State<JuzPageView> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -136,14 +134,14 @@ class _JuzPageViewState extends State<JuzPageView> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+        MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
       );
     }
 
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordJuzPage()),
+        MaterialPageRoute(builder: (context) => const RecordJuzPage()),
       );
     }
     if (index == 3) {
@@ -183,7 +181,7 @@ class _JuzPageViewState extends State<JuzPageView> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
   }
@@ -233,9 +231,9 @@ class _JuzPageViewState extends State<JuzPageView> {
     String res = '';
 
     final arabics = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    number.characters.forEach((element) {
+    for (var element in number.characters) {
       res += arabics[int.parse(element)];
-    });
+    }
 
 /*   final latins = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']; */
     return res;
@@ -252,14 +250,14 @@ class _JuzPageViewState extends State<JuzPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -312,7 +310,7 @@ class _JuzPageViewState extends State<JuzPageView> {
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
-                                  return new Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 }
@@ -325,7 +323,6 @@ class _JuzPageViewState extends State<JuzPageView> {
                                           snapshot.data?.docs[index];
                                       String verseget =
                                           ds!["verse"].replaceAll('|', ' ');
-                                      ;
                                       int verseNo = ds["verseNo"];
                                       String ArabicNo = convertToArabicNumber(
                                           ds["verseNo"].toString());
@@ -354,20 +351,20 @@ class _JuzPageViewState extends State<JuzPageView> {
                                           _tapGestureRecognizer =
                                               LongPressGestureRecognizer();
                                           _tapGestureRecognizer
-                                            ..onLongPress = () {
+                                            .onLongPress = () {
                                               showDialog(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
                                                     return AlertDialog(
                                                       scrollable: true,
-                                                      title: Text("Options"),
+                                                      title: const Text("Options"),
                                                       content: Column(
                                                         children: [
-                                                          new ListTile(
-                                                              title: new Text(
+                                                          ListTile(
+                                                              title: const Text(
                                                                   'Add Bookmark'),
-                                                              trailing: Icon(
+                                                              trailing: const Icon(
                                                                   Icons
                                                                       .bookmark),
                                                               onTap: () {
@@ -385,11 +382,11 @@ class _JuzPageViewState extends State<JuzPageView> {
                                                                         context)
                                                                     .pop();
                                                               }),
-                                                          Divider(),
-                                                          new ListTile(
-                                                              title: new Text(
+                                                          const Divider(),
+                                                          ListTile(
+                                                              title: const Text(
                                                                   'Show Word Content'),
-                                                              trailing: Icon(Icons
+                                                              trailing: const Icon(Icons
                                                                   .contact_page_outlined),
                                                               onTap: () {
                                                                 showDialog(
@@ -494,8 +491,9 @@ class _JuzPageViewState extends State<JuzPageView> {
                                         );
                                       }
                                       if (index + 1 ==
-                                          snapshot.data?.docs.length)
+                                          snapshot.data?.docs.length) {
                                         rowsChildrens.add(rowChildren);
+                                      }
 
                                       final display2 = Theme.of(context)
                                           .textTheme
@@ -540,16 +538,16 @@ class _JuzPageViewState extends State<JuzPageView> {
                                                     ),
                                                     (position + 1 == val)
                                                         ? IconButton(
-                                                            icon: Icon(
+                                                            icon: const Icon(
                                                                 Icons.done),
                                                             onPressed: () {
                                                               addActivities(
                                                                   widget
                                                                       .juzName);
                                                               updateCounter();
-                                                              final snackBar =
+                                                              const snackBar =
                                                                   SnackBar(
-                                                                content: const Text(
+                                                                content: Text(
                                                                     'Juz Completed'),
                                                               );
                                                               ScaffoldMessenger
@@ -558,17 +556,17 @@ class _JuzPageViewState extends State<JuzPageView> {
                                                                   .showSnackBar(
                                                                       snackBar);
                                                             })
-                                                        : SizedBox(
+                                                        : const SizedBox(
                                                             height: 0,
                                                           )
                                                   ],
                                                 )
-                                              : SizedBox(
+                                              : const SizedBox(
                                                   height: 0,
                                                 ),
                                           (index == 0)
-                                              ? Divider()
-                                              : SizedBox(height: 0),
+                                              ? const Divider()
+                                              : const SizedBox(height: 0),
                                           Directionality(
                                               textDirection: TextDirection.rtl,
                                               child:
@@ -595,7 +593,7 @@ class _JuzPageViewState extends State<JuzPageView> {
                                                                       (rowChildren) =>
                                                                           Container(
                                                                             margin:
-                                                                                EdgeInsets.only(top: 10),
+                                                                                const EdgeInsets.only(top: 10),
                                                                             child: RichText(
                                                                                 textAlign: TextAlign.center,
                                                                                 text: TextSpan(
@@ -645,7 +643,7 @@ class _JuzPageViewState extends State<JuzPageView> {
                       currentIndex: _selectedIndex,
                       onTap: _onItemTapped,
                       selectedItemColor: HexColor("#ffde59"),
-                      items: [
+                      items: const [
                         BottomNavigationBarItem(
                             icon: Icon(Icons.home), label: 'Home'),
                         BottomNavigationBarItem(

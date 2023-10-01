@@ -16,14 +16,14 @@ class _QaidaListsState extends State<QaidaLists> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -35,7 +35,7 @@ class _QaidaListsState extends State<QaidaLists> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 65),
+                margin: const EdgeInsets.only(left: 65),
                 child: Text(
                   "Qaida Lists",
                   style: TextStyle(
@@ -47,7 +47,7 @@ class _QaidaListsState extends State<QaidaLists> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
@@ -62,7 +62,7 @@ class _QaidaListsState extends State<QaidaLists> {
                         );
                 return Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     GestureDetector(

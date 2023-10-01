@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
 import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:qurankhwani/RecordPage.dart';
 import 'package:qurankhwani/RecordSurahPage.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
 import 'package:qurankhwani/group_screen.dart';
-import 'package:qurankhwani/home.dart';
 import 'package:qurankhwani/homeScreen.dart' as list;
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
@@ -19,7 +17,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qurankhwani/main.dart' as data;
 
 class SurahList extends StatefulWidget {
-  SurahList();
+  const SurahList();
 
   @override
   State<SurahList> createState() => _SurahListState();
@@ -41,20 +39,21 @@ class _SurahListState extends State<SurahList> {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData)
-                return new Center(
+              if (!snapshot.hasData) {
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
-              if (snapshot.data!.docs.length == 0) {
-                return SizedBox(
+              }
+              if (snapshot.data!.docs.isEmpty) {
+                return const SizedBox(
                   height: 0,
                 );
-              } else
+              } else {
                 return Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 68,
-                      child: new ListView.builder(
+                      child: ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
@@ -78,13 +77,13 @@ class _SurahListState extends State<SurahList> {
                               child: (title != '')
                                   ? Center(
                                       child: Card(
-                                          margin: EdgeInsets.all(8),
+                                          margin: const EdgeInsets.all(8),
 
                                           //  height: 50,
                                           // width: 100,
                                           color: HexColor("#ffde59"),
                                           child: Padding(
-                                              padding: EdgeInsets.all(12),
+                                              padding: const EdgeInsets.all(12),
                                               child: Center(
                                                   child: Text(
                                                       title +
@@ -101,7 +100,7 @@ class _SurahListState extends State<SurahList> {
                                                             HexColor("#2a6e2d"),
                                                         fontFamily: 'Schyler',
                                                       ))))))
-                                  : Center(
+                                  : const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                               onTap: () {
@@ -123,6 +122,7 @@ class _SurahListState extends State<SurahList> {
                     ),
                   ],
                 );
+              }
             }),
       ),
     );
@@ -180,7 +180,6 @@ class _SurahListState extends State<SurahList> {
           dummyListsurahEndPages.add(dummySearchsurahEndPages[i]);
         }
       }
-      ;
       setState(() {
         items.clear();
         itemsAr.clear();
@@ -222,7 +221,7 @@ class _SurahListState extends State<SurahList> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHomePage(
+            builder: (context) => const MyHomePage(
                   title: 'Quran Khwani',
                 )),
       );
@@ -230,13 +229,13 @@ class _SurahListState extends State<SurahList> {
     if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SurahList()),
+        MaterialPageRoute(builder: (context) => const SurahList()),
       );
     }
     if (index == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RecordSurahPage()),
+        MaterialPageRoute(builder: (context) => const RecordSurahPage()),
       );
     }
     if (index == 3) {
@@ -262,13 +261,13 @@ class _SurahListState extends State<SurahList> {
     if (index == 4) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookmarkPage()),
+        MaterialPageRoute(builder: (context) => const BookmarkPage()),
       );
     }
     if (index == 5) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DuaLists()),
+        MaterialPageRoute(builder: (context) => const DuaLists()),
       );
     }
   }
@@ -277,14 +276,14 @@ class _SurahListState extends State<SurahList> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -296,7 +295,7 @@ class _SurahListState extends State<SurahList> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 55),
+                margin: const EdgeInsets.only(left: 55),
                 child: Text(
                   "Surah List",
                   style: TextStyle(
@@ -308,7 +307,7 @@ class _SurahListState extends State<SurahList> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
@@ -353,7 +352,7 @@ class _SurahListState extends State<SurahList> {
                         );
                 return Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     GestureDetector(
@@ -362,7 +361,7 @@ class _SurahListState extends State<SurahList> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => SurahPageView(
-                                  '${items[index]}',
+                                  items[index],
                                   0,
                                   surahNo[index].toString(),
                                   surahAyah[index].toString(),
@@ -405,7 +404,7 @@ class _SurahListState extends State<SurahList> {
                     currentIndex: _selectedIndex,
                     onTap: _onItemTapped,
                     selectedItemColor: HexColor("#ffde59"),
-                    items: [
+                    items: const [
                       BottomNavigationBarItem(
                           icon: Icon(Icons.home), label: 'Home'),
                       BottomNavigationBarItem(

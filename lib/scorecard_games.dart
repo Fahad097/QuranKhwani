@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 class ScorecardGames extends StatefulWidget {
@@ -18,14 +17,14 @@ class _ScorecardGamesState extends State<ScorecardGames> {
   Widget build(BuildContext context) {
    return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/image/background.jpg"),
             fit: BoxFit.cover),
       ),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -37,7 +36,7 @@ class _ScorecardGamesState extends State<ScorecardGames> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(left: 45),
+                margin: const EdgeInsets.only(left: 45),
                 child: Text(
                   widget.name,
                   style: TextStyle(
@@ -82,7 +81,7 @@ class _ScorecardGamesState extends State<ScorecardGames> {
                               fontFamily: 'Schyler',
                             ),
                           ),
-                          trailing: Text(userPoint,style: TextStyle(fontWeight: FontWeight.bold),)
+                          trailing: Text(userPoint,style: const TextStyle(fontWeight: FontWeight.bold),)
                         ),
                       );
                             });

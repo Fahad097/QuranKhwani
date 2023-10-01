@@ -1,10 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/group_screen.dart';
 import 'package:qurankhwani/intro_name.dart';
-import 'package:qurankhwani/SurahLists.dart';
 import 'package:qurankhwani/juzLists.dart';
 import 'package:qurankhwani/main.dart' as main;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,7 +18,7 @@ class MyDrawer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/image/background.jpg"),
               fit: BoxFit.cover),
@@ -32,7 +30,7 @@ class MyDrawer extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundColor: Color(0xffFDCF09),
+                backgroundColor: const Color(0xffFDCF09),
                 child: main.url != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -55,7 +53,7 @@ class MyDrawer extends StatelessWidget {
                         ),
                       ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -67,7 +65,7 @@ class MyDrawer extends StatelessWidget {
                         color: HexColor("#ffde59"),
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
@@ -80,20 +78,20 @@ class MyDrawer extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return JuzList();
+                    return const JuzList();
                   }));
                 },
-                leading: Icon(
+                leading: const Icon(
                   Icons.list,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Surah List',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -101,14 +99,14 @@ class MyDrawer extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return BookmarkPage();
+                    return const BookmarkPage();
                   }));
                 },
-                leading: Icon(
+                leading: const Icon(
                   Icons.list,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Bookmarks',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -136,20 +134,20 @@ class MyDrawer extends StatelessWidget {
                     );
                   }
                 },
-                leading: Icon(
+                leading: const Icon(
                   Icons.list,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Groups',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              Divider(
+              const Divider(
                 color: Colors.grey,
                 thickness: 1,
               ),
-              Text(
+              const Text(
                 "About",
                 style: TextStyle(
                   color: Colors.white,

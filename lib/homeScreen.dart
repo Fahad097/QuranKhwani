@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:excel/excel.dart';
-import 'dart:io';
 import 'package:qurankhwani/GameLists.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
@@ -24,10 +22,7 @@ import 'package:qurankhwani/main.dart';
 import 'package:quantity_input/quantity_input.dart';
 import 'package:qurankhwani/wordsMeaningList.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as path;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -113,6 +108,7 @@ var DuaNames = <String>[];
 var DuaNo = <String>[];
 Map<String, Map<String, String>> elements = {};
 Map<String, Map<String, String>> meanings = {};
+Map<String, Map<String, String>> EnglishMeanings = {};
 var pageLength = 0;
 List<String> wordsToFindrange = [];
 List<String> ArabicWordsToFindrange = [];
@@ -293,22 +289,22 @@ class _MyHomePageState extends State<MyHomePage> {
   void setUserRecord() async {
     Map<String, dynamic> arr = {};
     var uservalue = await FirebaseAuth.instance.signInAnonymously();
-    var doc = await FirebaseFirestore.instance.collection("UserRecord");
+    var doc = FirebaseFirestore.instance.collection("UserRecord");
     var doc1 =
-        await FirebaseFirestore.instance.collection("JuzLists").orderBy("Para");
+        FirebaseFirestore.instance.collection("JuzLists").orderBy("Para");
     await FirebaseFirestore.instance
         .collection("UserRecord")
         .where("UserId", isEqualTo: uservalue.user?.uid)
         .where('name', isEqualTo: 'juz')
         .get()
         .then((value) {
-      if (value.docs.length == 0) {
+      if (value.docs.isEmpty) {
         arr.addAll({"UserId": uservalue.user?.uid});
         arr.addAll({"name": 'juz'});
         doc1.get().then((value) {
-          value.docs.forEach((element) {
+          for (var element in value.docs) {
             arr.addAll({"${element.data()["Translation"]}": 0});
-          });
+          }
           doc.add(arr);
         });
 
@@ -323,18 +319,18 @@ class _MyHomePageState extends State<MyHomePage> {
         .orderBy('duaNo')
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         DuaNames.add(element.data()['duaName']);
         DuaNo.add(element.data()['duaNo'].toString());
-      });
+      }
     });
   }
 
   void setSurahUserRecord() async {
     Map<String, dynamic> arr = {};
     var uservalue = await FirebaseAuth.instance.signInAnonymously();
-    var doc = await FirebaseFirestore.instance.collection("UserRecord");
-    var doc1 = await FirebaseFirestore.instance
+    var doc = FirebaseFirestore.instance.collection("UserRecord");
+    var doc1 = FirebaseFirestore.instance
         .collection("SurahLists")
         .orderBy("index");
     await FirebaseFirestore.instance
@@ -343,13 +339,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .where('name', isEqualTo: 'surah')
         .get()
         .then((value) {
-      if (value.docs.length == 0) {
+      if (value.docs.isEmpty) {
         arr.addAll({"UserId": uservalue.user?.uid});
         arr.addAll({"name": 'surah'});
         doc1.get().then((value) {
-          value.docs.forEach((element) {
+          for (var element in value.docs) {
             arr.addAll({"${element.data()["title"]}": 0});
-          });
+          }
           doc.add(arr);
         });
 
@@ -360,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getSurahList() async {
     var uservalue = await FirebaseAuth.instance.signInAnonymously();
-    var doc = await FirebaseFirestore.instance
+    var doc = FirebaseFirestore.instance
         .collection("UserRecord")
         .where("UserId", isEqualTo: uservalue.user?.uid)
         .where('name', isEqualTo: 'surah');
@@ -370,12 +366,12 @@ class _MyHomePageState extends State<MyHomePage> {
         .get()
         .then((value) => value.docs.forEach((element) {
               doc.get().then((value1) {
-                value1.docs.forEach((element1) {
+                for (var element1 in value1.docs) {
                   surahCount.addAll({
                     "${element.data()["title"]}":
                         element1.data()[element.data()["title"]].toString()
                   });
-                });
+                }
               });
               surahNameList.add(element.data()["title"]);
               surahArabicNameList.add(element.data()["titleAr"]);
@@ -391,15 +387,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void getQaida() async {
     Map<String, String> mapElement = {};
     Map<String, String> mapMeaning = {};
+    Map<String, String> mapEnglishMeaning = {};
     List unique = [];
     await FirebaseFirestore.instance
         .collection('Qaida')
         .orderBy('Record')
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         var ele = element.data()['element'];
         var meaning = element.data()['meaning'];
+        var englishMeaning = element.data()['englishMeaning'];
         var row = element.data()['row'];
         var col = element.data()['Column'];
         var page = element.data()['page'];
@@ -423,23 +421,30 @@ class _MyHomePageState extends State<MyHomePage> {
             page.toString() + ',' + col.toString(), () => ele);
         mapMeaning.putIfAbsent(
             page.toString() + ',' + col.toString(), () => meaning);
+        mapEnglishMeaning.putIfAbsent(
+            page.toString() + ',' + col.toString(), () => englishMeaning);
         if (unique.contains(page.toString() + ',' + row.toString())) {
           elements.putIfAbsent(
               page.toString() + ',' + row.toString(), () => mapElement);
           meanings.putIfAbsent(
               page.toString() + ',' + row.toString(), () => mapMeaning);
+          EnglishMeanings.putIfAbsent(
+              page.toString() + ',' + row.toString(), () => mapEnglishMeaning);
         } else {
           if (unique.isNotEmpty) {
             mapElement = {};
             mapMeaning = {};
+            mapEnglishMeaning = {};
             mapElement.putIfAbsent(
                 page.toString() + ',' + col.toString(), () => ele);
             mapMeaning.putIfAbsent(
                 page.toString() + ',' + col.toString(), () => meaning);
+            mapEnglishMeaning.putIfAbsent(
+                page.toString() + ',' + col.toString(), () => englishMeaning);
           }
           unique.add(page.toString() + ',' + row.toString());
         }
-      });
+      }
     });
     // print(rowlenght);
     // print(elements['3,10']);
@@ -448,7 +453,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void getJuzList() async {
     var uservalue = await FirebaseAuth.instance.signInAnonymously();
 
-    var doc = await FirebaseFirestore.instance
+    var doc = FirebaseFirestore.instance
         .collection("UserRecord")
         .where("UserId", isEqualTo: uservalue.user?.uid)
         .where('name', isEqualTo: 'juz');
@@ -459,13 +464,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((value) => value.docs.forEach((element) {
               //   print(element.data()["title"]);
               doc.get().then((value1) {
-                value1.docs.forEach((element1) {
+                for (var element1 in value1.docs) {
                   JuzCount.addAll({
                     "${element.data()["Translation"]}": element1
                         .data()[element.data()["Translation"]]
                         .toString()
                   });
-                });
+                }
               });
               JuzNameList.add(element.data()["Translation"]);
               JuzArabicNameList.add(element.data()["Name"]);
@@ -534,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
     getLocationFromCache();
     notificationServices.intializationNotification();
     // startTime();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         notificationServices.showNotify();
       });
@@ -586,7 +591,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               flexibleSpace: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/image/background.jpg"),
                     fit: BoxFit.cover,
@@ -598,7 +603,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   // Spacer(),
                   Container(
-                    margin: EdgeInsets.only(left: 45),
+                    margin: const EdgeInsets.only(left: 45),
                     child: Text(
                       widget.title,
                       style: TextStyle(
@@ -607,7 +612,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontFamily: 'Schyler'),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   // CircleAvatar(
                   //   radius: 18,
                   //   backgroundColor: Color(0xffFDCF09),
@@ -640,7 +645,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                                 scrollable: true,
-                                title: Text('Options'),
+                                title: const Text('Options'),
                                 content: StatefulBuilder(
                                   // You need this, notice the parameters below:
                                   builder: (BuildContext context,
@@ -664,7 +669,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         value.replaceAll(
                                                             ',', '')));
                                                   })),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           QuantityInput(
@@ -690,7 +695,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         );
                       },
-                      icon: Icon(Icons.settings))
+                      icon: const Icon(Icons.settings))
                 ],
               ),
             ),
@@ -698,14 +703,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Image.asset(
                       "assets/image/Qurankhwani.png",
                       height: 200,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(
@@ -718,7 +723,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontFamily: 'Schyler'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -726,7 +731,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         height: MediaQuery.of(context).size.shortestSide,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
+                          image: const DecorationImage(
                               image: AssetImage("assets/image/background.jpg"),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(10),
@@ -788,7 +793,7 @@ Widget buildMenu(context) {
             //           ),
             //         ),
             // ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -800,7 +805,7 @@ Widget buildMenu(context) {
                       color: HexColor("#ffde59"),
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
@@ -813,20 +818,20 @@ Widget buildMenu(context) {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             ListTile(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return JuzList();
+                  return const JuzList();
                 }));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.list,
                 color: Colors.white,
               ),
-              title: Text(
+              title: const Text(
                 'Juz List',
                 style: TextStyle(color: Colors.white),
               ),
@@ -834,14 +839,14 @@ Widget buildMenu(context) {
             ListTile(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return BookmarkPage();
+                  return const BookmarkPage();
                 }));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.list,
                 color: Colors.white,
               ),
-              title: Text(
+              title: const Text(
                 'Bookmarks',
                 style: TextStyle(color: Colors.white),
               ),
@@ -849,14 +854,14 @@ Widget buildMenu(context) {
             ListTile(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SurahList();
+                  return const SurahList();
                 }));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.list,
                 color: Colors.white,
               ),
-              title: Text(
+              title: const Text(
                 'Surah List',
                 style: TextStyle(color: Colors.white),
               ),
@@ -882,20 +887,20 @@ Widget buildMenu(context) {
                   );
                 }
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.list,
                 color: Colors.white,
               ),
-              title: Text(
+              title: const Text(
                 'Groups',
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            Divider(
+            const Divider(
               color: Colors.grey,
               thickness: 1,
             ),
-            Text(
+            const Text(
               "About",
               style: TextStyle(
                 color: Colors.white,
@@ -920,48 +925,48 @@ class Choice {
   final String color;
 }
 
-const List<Choice> choices = const <Choice>[
-  const Choice(
+const List<Choice> choices = <Choice>[
+  Choice(
       title: 'AlQuran',
       image: "assets/image/allquran.png",
       value: "AlQuran",
       color: '#f5f5f5'),
-  const Choice(
+  Choice(
       title: 'Total Count',
       image: "assets/image/count.jpg",
       value: "Count",
       color: '#ffffff'),
-  const Choice(
+  Choice(
       title: 'Continue',
       image: "assets/image/continue.jpg",
       value: "Continue",
       color: '#ffffff'),
-  const Choice(
+  Choice(
       title: 'Groups',
       image: "assets/image/groups.jfif",
       value: "Groups",
       color: '#ffffff'),
-  const Choice(
+  Choice(
       title: 'Duas',
       image: "assets/image/dua.jpg",
       value: "Duas",
       color: '#ffffff'),
-  const Choice(
+  Choice(
       title: 'Qaida',
       image: "assets/image/qaida.png",
       value: "Qaida",
       color: 'ffffff'),
-  const Choice(
+  Choice(
       title: 'Games',
       image: "assets/image/game.png",
       value: "Game",
       color: 'ffffff'),
-  const Choice(
+  Choice(
       title: 'Prayer Time',
       image: "assets/image/prayer.png",
       value: "Prayer Time",
       color: 'ffffff'),
-  const Choice(
+  Choice(
       title: 'Quranic Words',
       image: "assets/image/words.png",
       value: "Words Meaning",
@@ -981,7 +986,7 @@ class SelectCard extends StatelessWidget {
             case "AlQuran":
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PageRouteJuzScreen()),
+                MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
               );
               break;
             case "Continue":
@@ -1137,7 +1142,7 @@ class SelectCard extends StatelessWidget {
                             fontFamily: 'Schyler',
                             color: HexColor("#ffde59")), //#a79162
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ]),

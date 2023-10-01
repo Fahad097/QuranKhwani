@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qurankhwani/main.dart';
 
@@ -20,13 +19,13 @@ class _DuasPageViewState extends State<DuasPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/image/background.jpg"),
                   fit: BoxFit.cover),
             ),
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -65,7 +64,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (!snapshot.hasData) {
-                                        return new Center(
+                                        return const Center(
                                           child: CircularProgressIndicator(),
                                         );
                                       }
@@ -78,7 +77,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                                 snapshot.data?.docs[index];
                                             String duaText = ds![
                                                 "arabicTextWithWordsMeaning"];
-                                            String meaning = ds!['Meaning'];
+                                            String meaning = ds['Meaning'];
 
                                             RegExp arabicRegex = RegExp(
                                                 r'[\u0600-\u06FF]+'); // Matches Arabic characters and spaces
@@ -103,7 +102,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                               _tapGestureRecognizer =
                                                   LongPressGestureRecognizer();
                                               _tapGestureRecognizer
-                                                ..onLongPress = () {
+                                                .onLongPress = () {
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -117,7 +116,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                                               child: Text(
                                                                 arabicArray[i]
                                                                     .toString(),
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         56,
                                                                     fontFamily:
@@ -131,7 +130,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                                                 englishArray[
                                                                         i + 1]
                                                                     .toString(),
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .grey),
                                                               )),
@@ -153,7 +152,7 @@ class _DuasPageViewState extends State<DuasPageView> {
                                               children: rowsChildrens
                                                   .map<Widget>((rowChildren) =>
                                                       Container(
-                                                        margin: EdgeInsets.only(
+                                                        margin: const EdgeInsets.only(
                                                             top: 10),
                                                         child: RichText(
                                                             textAlign: TextAlign

@@ -21,7 +21,7 @@ class _RequestPageState extends State<RequestPage> {
     return Scaffold(
         appBar: AppBar(
             flexibleSpace: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/image/background.jpg"),
                   fit: BoxFit.cover,
@@ -55,7 +55,7 @@ class _RequestPageState extends State<RequestPage> {
                       child: ListTile(
                         title: Text(userName),
                         trailing: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.delete,
                             color: Colors.red,
                           ),

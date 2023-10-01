@@ -17,13 +17,13 @@ class _addGroupsState extends State<addGroups> {
   final reason = TextEditingController();
   final memberNo = TextEditingController();
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/image/background.jpg"),
                 fit: BoxFit.cover,
@@ -48,7 +48,7 @@ class _addGroupsState extends State<addGroups> {
                   child: TextFormField(
                     controller: grName,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       hoverColor: HexColor("#2a6e2d"),
                       hintText: 'Group Name',
                     ),
@@ -65,7 +65,7 @@ class _addGroupsState extends State<addGroups> {
                   child: TextFormField(
                     controller: reason,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       hoverColor: HexColor("#2a6e2d"),
                       hintText: 'Reason for Quran Khwani',
                     ),
@@ -83,7 +83,7 @@ class _addGroupsState extends State<addGroups> {
                     keyboardType: TextInputType.number,
                     controller: memberNo,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       hoverColor: HexColor("#2a6e2d"),
                       hintText: 'Total Member',
                     ),
