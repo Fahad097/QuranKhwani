@@ -45,6 +45,7 @@ dev_dependencies:
   google_language_fonts: ^2.0.0-nullsafety.1
   #google_fonts: ^2.0.0-nullsafety.0
   #google_fonts_arabic: ^1.1.6
+  google_fonts:
   shrink_sidemenu: ^2.0.0+2-null-safety
   numberpicker: ^2.1.1
   cloud_firestore:

@@ -1,6 +1,7 @@
 //import 'package:animated_drawer/views/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_language_fonts/google_language_fonts.dart';
+//import 'package:google_language_fonts/google_language_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/RecordPage.dart';
 import 'package:qurankhwani/bookmark_page.dart';
@@ -384,7 +385,7 @@ class _JuzListState extends State<JuzList> {
                         child: ListTile(
                           trailing: Text(
                             '${itemsAr[index]} ',
-                            style: ArabicFonts.lateef(textStyle: display1),
+                            style: GoogleFonts.lateef(textStyle: display1),
                             // style: TextStyle(
                             //   color: HexColor("#2a6e2d"),
                             //   fontFamily: ArabicFonts.Lateef,

@@ -3,11 +3,12 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:qurankhwani/GamePageView.dart';
 import 'package:qurankhwani/GuessTheVoice.dart';
 import 'package:qurankhwani/jigsawPuzzle.dart';
+import 'package:qurankhwani/jigsaw_game.dart';
 
 class GameOption extends StatefulWidget {
   var value;
 
-GameOption(this.value);
+  GameOption(this.value);
 
   @override
   State<GameOption> createState() => _GameOptionState();
@@ -16,21 +17,24 @@ GameOption(this.value);
 enum SingingCharacter { letter, word }
 
 SingingCharacter? character = SingingCharacter.letter;
- int pageCount = 1;
+int pageCount = 1;
 int result = 0;
+
 class _GameOptionState extends State<GameOption> {
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
 
   final ButtonStyle style = ElevatedButton.styleFrom(
-      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
- @override
+      backgroundColor: HexColor("#2a6e2d"),
+      textStyle: const TextStyle(fontSize: 20));
+  @override
   void initState() {
     pageCount = 1;
     result = 0;
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +66,9 @@ class _GameOptionState extends State<GameOption> {
                 ),
                 Center(
                   child: Text(
-                    (widget.value == 'Game')?"Welcome to Quran Quiz":"Welcome to "+widget.value,
+                    (widget.value == 'Game')
+                        ? "Welcome to Quran Quiz"
+                        : "Welcome to " + widget.value,
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -154,7 +160,11 @@ class _GameOptionState extends State<GameOption> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => (widget.value == 'Game')?const GamePageView():(widget.value == 'Guess the Voice')?const GuessTheVoice():const JigsawPuzzles()),
+                                  builder: (context) => (widget.value == 'Game')
+                                      ? const GamePageView()
+                                      : (widget.value == 'Guess the Voice')
+                                          ? const GuessTheVoice()
+                                          : PuzzleGame()),
                             );
                           },
                           child: const Text(

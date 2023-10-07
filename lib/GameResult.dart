@@ -20,7 +20,8 @@ class _GameResultState extends State<GameResult> {
   final myController = TextEditingController();
 
   final ButtonStyle style = ElevatedButton.styleFrom(
-      backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
+      backgroundColor: HexColor("#2a6e2d"),
+      textStyle: const TextStyle(fontSize: 20));
   @override
   void initState() {
     loadResult();
@@ -137,20 +138,26 @@ class _GameResultState extends State<GameResult> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Center(
-                          child: Text(
-                            (widget.order != 0)
-                                ? "You have completed the Puzzle in " +
-                                    widget.time
-                                : "You have score " +
-                                    val.result.toString() +
-                                    " out of 5.",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Schyler',
-                                color: HexColor("#2a6e2d")),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                (widget.order != 0)
+                                    ? "You have completed the Puzzle in " +
+                                        widget.time
+                                    : "You have score " +
+                                        val.result.toString() +
+                                        " out of 5.",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Schyler',
+                                    color: HexColor("#2a6e2d")),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 20,

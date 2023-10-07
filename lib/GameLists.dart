@@ -8,6 +8,7 @@ import 'package:qurankhwani/scorecard_games.dart';
 import 'package:qurankhwani/suduko_puzzle.dart';
 import 'package:qurankhwani/wordle.dart';
 
+import 'jigsawPuzzle.dart';
 import 'jigsaw_game.dart';
 
 class GameLists extends StatefulWidget {
@@ -139,7 +140,7 @@ class _GameListsState extends State<GameLists> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PuzzleGame()),
+                MaterialPageRoute(builder: (context) => JigsawScreen()),
               );
             },
             child: Card(
