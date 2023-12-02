@@ -310,8 +310,7 @@ class _SurahPageViewState extends State<SurahPageView> {
                                     itemBuilder: (context, index) {
                                       QueryDocumentSnapshot<Object?>? ds =
                                           snapshot.data?.docs[index];
-                                      String verseget =
-                                          ds!["verse"].replaceAll('|', ' ');
+                                      String verseget = ds!["verse"];
                                       int verseNo = ds["verseNo"];
                                       String ArabicNo = convertToArabicNumber(
                                           ds["verseNo"].toString());
@@ -330,67 +329,70 @@ class _SurahPageViewState extends State<SurahPageView> {
                                             i++) {
                                           _tapGestureRecognizer =
                                               LongPressGestureRecognizer();
-                                          _tapGestureRecognizer
-                                            .onLongPress = () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      scrollable: true,
-                                                      title: const Text("Options"),
-                                                      content: Column(
-                                                        children: [
-                                                          ListTile(
-                                                              title: const Text(
-                                                                  'Add Bookmark'),
-                                                              trailing: const Icon(
-                                                                  Icons
-                                                                      .bookmark),
-                                                              onTap: () {
-                                                                _addbookmark(
-                                                                  widget
-                                                                      .surahName,
-                                                                  verseNo,
-                                                                  int.parse(
-                                                                      pageNo),
-                                                                  int.parse(
-                                                                      juzNo),
-                                                                  int.parse(widget
-                                                                      .surahNo),
-                                                                  position,
-                                                                );
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              }),
-                                                          const Divider(),
-                                                          ListTile(
-                                                              title: const Text(
-                                                                  'Show Word Content'),
-                                                              trailing: const Icon(Icons
-                                                                  .contact_page_outlined),
-                                                              onTap: () {
-                                                                showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return AlertDialog(
-                                                                        scrollable:
-                                                                            true,
-                                                                        title: Text(splitverse[i].replaceAll('.',
-                                                                                '') +
-                                                                            " "),
-                                                                      );
-                                                                    });
-                                                              }),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  });
-                                            };
+                                          _tapGestureRecognizer.onLongPress =
+                                              () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    scrollable: true,
+                                                    title:
+                                                        const Text("Options"),
+                                                    content: Column(
+                                                      children: [
+                                                        ListTile(
+                                                            title: const Text(
+                                                                'Add Bookmark'),
+                                                            trailing:
+                                                                const Icon(Icons
+                                                                    .bookmark),
+                                                            onTap: () {
+                                                              _addbookmark(
+                                                                widget
+                                                                    .surahName,
+                                                                verseNo,
+                                                                int.parse(
+                                                                    pageNo),
+                                                                int.parse(
+                                                                    juzNo),
+                                                                int.parse(widget
+                                                                    .surahNo),
+                                                                position,
+                                                              );
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            }),
+                                                        const Divider(),
+                                                        ListTile(
+                                                            title: const Text(
+                                                                'Show Word Content'),
+                                                            trailing:
+                                                                const Icon(Icons
+                                                                    .contact_page_outlined),
+                                                            onTap: () {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (BuildContext
+                                                                          context) {
+                                                                    return AlertDialog(
+                                                                      scrollable:
+                                                                          true,
+                                                                      title: Text(splitverse[i].replaceAll(
+                                                                              '.',
+                                                                              '') +
+                                                                          " "),
+                                                                    );
+                                                                  });
+                                                            }),
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                          };
 
                                           var arabicWord = splitverse[i]
                                                   .replaceAll('.', '') +

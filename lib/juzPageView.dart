@@ -8,6 +8,7 @@ import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/group_screen.dart';
 import 'package:qurankhwani/homeScreen.dart';
 import 'package:qurankhwani/intro_name.dart';
+import 'package:qurankhwani/juzLists.dart';
 import 'package:qurankhwani/main.dart';
 import 'package:qurankhwani/pageRoute.dart';
 //import 'package:google_fonts_arabic/fonts.dart';
@@ -38,6 +39,8 @@ class _JuzPageViewState extends State<JuzPageView> {
   final _formKey = GlobalKey<FormState>();
   var _selectedIndex = 1;
   late LongPressGestureRecognizer _tapGestureRecognizer;
+  List<String> quranWordsMeaning = [];
+  Set<String> uniqueWords = Set();
   // late Timer _timer;
 // @override
 // void dispose() {
@@ -321,8 +324,7 @@ class _JuzPageViewState extends State<JuzPageView> {
                                     itemBuilder: (context, index) {
                                       QueryDocumentSnapshot<Object?>? ds =
                                           snapshot.data?.docs[index];
-                                      String verseget =
-                                          ds!["verse"].replaceAll('|', ' ');
+                                      String verseget = ds!["verse"];
                                       int verseNo = ds["verseNo"];
                                       String ArabicNo = convertToArabicNumber(
                                           ds["verseNo"].toString());
@@ -345,70 +347,140 @@ class _JuzPageViewState extends State<JuzPageView> {
 
                                       if (verseNo != 0) {
                                         var splitverse = verseget.split(' ');
+                                        //  print(splitverse);
                                         for (var i = 0;
                                             i < splitverse.length;
                                             i++) {
                                           _tapGestureRecognizer =
                                               LongPressGestureRecognizer();
-                                          _tapGestureRecognizer
-                                            .onLongPress = () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      scrollable: true,
-                                                      title: const Text("Options"),
-                                                      content: Column(
-                                                        children: [
-                                                          ListTile(
-                                                              title: const Text(
-                                                                  'Add Bookmark'),
-                                                              trailing: const Icon(
-                                                                  Icons
-                                                                      .bookmark),
-                                                              onTap: () {
-                                                                _addbookmark(
-                                                                    juzNo
-                                                                        .toString(),
-                                                                    pageNo
-                                                                        .toString(),
-                                                                    surahNo
-                                                                        .toString(),
-                                                                    verseNo
-                                                                        .toString(),
-                                                                    position);
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              }),
-                                                          const Divider(),
-                                                          ListTile(
-                                                              title: const Text(
-                                                                  'Show Word Content'),
-                                                              trailing: const Icon(Icons
-                                                                  .contact_page_outlined),
-                                                              onTap: () {
-                                                                showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return AlertDialog(
-                                                                        scrollable:
-                                                                            true,
-                                                                        title: Text(splitverse[i].replaceAll('.',
-                                                                                '') +
-                                                                            " "),
-                                                                      );
-                                                                    });
-                                                              }),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  });
-                                            };
+                                          _tapGestureRecognizer.onLongPress =
+                                              () async {
+                                            quranWordsMeaning.clear();
+                                            uniqueWords.clear();
+                                            await FirebaseFirestore.instance
+                                                .collection('QuranWords')
+                                                .where('Surah',
+                                                    isEqualTo:
+                                                        int.parse(surahNo))
+                                                .where('Ayah',
+                                                    isEqualTo: (surahNo == "9")
+                                                        ? verseNo
+                                                        : verseNo + 1)
+                                                .get()
+                                                .then((value) => value.docs
+                                                        .forEach((element) {
+                                                      print('in');
+                                                      if (!uniqueWords.contains(
+                                                          element
+                                                              .data()[
+                                                                  'Record Number']
+                                                              .toString())) {
+                                                        uniqueWords.add(element
+                                                            .data()[
+                                                                'Record Number']
+                                                            .toString());
+                                                        quranWordsMeaning.add((element
+                                                                    .data()[
+                                                                        'Record Number']
+                                                                    .toString() +
+                                                                "|" +
+                                                                element.data()[
+                                                                    'Words'] +
+                                                                "|" +
+                                                                element.data()[
+                                                                    'Meaning'])
+                                                            .trim());
+                                                      }
+                                                    }));
+
+                                            quranWordsMeaning.sort((a, b) {
+                                              int recordNumberA =
+                                                  int.parse(a.split('|')[0]);
+                                              int recordNumberB =
+                                                  int.parse(b.split('|')[0]);
+
+                                              return recordNumberA
+                                                  .compareTo(recordNumberB);
+                                            });
+                                            String word = quranWordsMeaning[i]
+                                                .split("|")[1];
+                                            String wordMeaning =
+                                                quranWordsMeaning[i]
+                                                    .split("|")[2];
+                                            print('press' +
+                                                word +
+                                                wordMeaning +
+                                                i.toString());
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    scrollable: true,
+                                                    title:
+                                                        const Text("Options"),
+                                                    content: Column(
+                                                      children: [
+                                                        ListTile(
+                                                            title: const Text(
+                                                                'Add Bookmark'),
+                                                            trailing:
+                                                                const Icon(Icons
+                                                                    .bookmark),
+                                                            onTap: () {
+                                                              _addbookmark(
+                                                                  juzNo
+                                                                      .toString(),
+                                                                  pageNo
+                                                                      .toString(),
+                                                                  surahNo
+                                                                      .toString(),
+                                                                  verseNo
+                                                                      .toString(),
+                                                                  position);
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            }),
+                                                        const Divider(),
+                                                        ListTile(
+                                                            title: const Text(
+                                                                'Show Word Content'),
+                                                            trailing:
+                                                                const Icon(Icons
+                                                                    .contact_page_outlined),
+                                                            onTap: () {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (BuildContext
+                                                                          context) {
+                                                                    return AlertDialog(
+                                                                      scrollable:
+                                                                          true,
+                                                                      title: Align(
+                                                                          alignment: Alignment.center,
+                                                                          child: Text(
+                                                                            word.toString(),
+                                                                            style:
+                                                                                const TextStyle(fontSize: 56, fontFamily: 'Al Qalam Quran'),
+                                                                          )),
+                                                                      content: Align(
+                                                                          alignment: Alignment.center,
+                                                                          child: Text(
+                                                                            wordMeaning.toString(),
+                                                                            style:
+                                                                                const TextStyle(color: Colors.grey),
+                                                                          )),
+                                                                    );
+                                                                  });
+                                                            }),
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                          };
                                           // _tapGestureRecognizer.onLongTapDown = (_,a) {
 
                                           //     _addbookmark(

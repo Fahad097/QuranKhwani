@@ -10,7 +10,8 @@ class WordPuzzleScreen extends StatefulWidget {
   _WordPuzzleScreenState createState() => _WordPuzzleScreenState();
 }
 
-class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProviderStateMixin {
+class _WordPuzzleScreenState extends State<WordPuzzleScreen>
+    with TickerProviderStateMixin {
   late CustomTimerController _controller;
   late int gridSize;
   List<String> letters = [];
@@ -22,15 +23,15 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-     _controller = CustomTimerController(
+    _controller = CustomTimerController(
       vsync: this,
       begin: const Duration(seconds: 0),
       end: const Duration(hours: 2),
       initialState: CustomTimerState.reset,
       interval: CustomTimerInterval.milliseconds,
-     );
-      _controller.reset();
-                        _controller.start();
+    );
+    _controller.reset();
+    _controller.start();
     gridSize = calculateGridSize();
     highlighted = List.filled(gridSize * gridSize, false);
     wordhighlighted = List.filled(gridSize * gridSize, false);
@@ -88,8 +89,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
     }
   }
 
-  bool isWordPlaceable(
-      String word, List<List<String>> grid, int row, int col, int rowDelta, int colDelta) {
+  bool isWordPlaceable(String word, List<List<String>> grid, int row, int col,
+      int rowDelta, int colDelta) {
     int length = word.length;
     if (row + length * rowDelta >= gridSize ||
         col + length * colDelta >= gridSize) {
@@ -103,7 +104,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
     return true;
   }
 
-  void placeWord(String word, List<List<String>> grid, int row, int col, int rowDelta, int colDelta) {
+  void placeWord(String word, List<List<String>> grid, int row, int col,
+      int rowDelta, int colDelta) {
     int length = word.length;
     for (int i = 0; i < length; i++) {
       grid[row + i * rowDelta][col + i * colDelta] = word[i];
@@ -116,143 +118,170 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
       appBar: AppBar(
         title: const Text('Search Words Puzzle'),
       ),
-      body:(wordsToFind == [])? const Center(
-                        child: CircularProgressIndicator(),
-                      ): Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              CustomTimer(
-                controller: _controller,
-                builder: (state, remaining) {
-                  // Build the widget you want!
-                    time = "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
-                   var orders = remaining.hours +remaining.minutes+remaining.seconds;
-                    order = int.parse(orders);
-                  return Text(
-                          "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                          style: const TextStyle(fontSize: 24.0));
-                                   }),
-              SizedBox(
-                height: MediaQuery.of(context).size.height - 400,
-                child: Expanded(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: gridSize,
-                    ),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            highlighted[index] = !highlighted[index];
-                            wordhighlighted[index] = !wordhighlighted[index];
-                            checkWord();
-                          });
-                        },
-                        child: Container(
-                          color: highlighted[index] ? Colors.yellow : Colors.white,
-                          child: Center(
-                            child: Text(
-                              letters[index],
-                              style: const TextStyle(
-                                fontSize: 20.0,
-                              ),
-                            ),
+      body: (wordsToFind == [])
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    CustomTimer(
+                        controller: _controller,
+                        builder: (state, remaining) {
+                          // Build the widget you want!
+                          time =
+                              "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
+                          var orders = remaining.hours +
+                              remaining.minutes +
+                              remaining.seconds;
+                          order = int.parse(orders);
+                          return Text(
+                              "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
+                              style: const TextStyle(fontSize: 24.0));
+                        }),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - 400,
+                      child: Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: gridSize,
                           ),
-                        ),
-                      );
-                    },
-                    itemCount: gridSize * gridSize,
-                  ),
-                ),
-              ),
-              const Text(
-                'Words to Find',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: wordsToFind.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        wordsToFind[index] +"  ("+ArabicWordsToFind[index]+")",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: wordFound[index] ? FontWeight.bold : FontWeight.normal,
-                          color: wordFound[index] ? Colors.green : Colors.black,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  highlighted[index] = !highlighted[index];
+                                  wordhighlighted[index] =
+                                      !wordhighlighted[index];
+                                  checkWord();
+                                });
+                              },
+                              child: Container(
+                                color: highlighted[index]
+                                    ? Colors.yellow
+                                    : Colors.white,
+                                child: Center(
+                                  child: Text(
+                                    letters[index],
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: gridSize * gridSize,
                         ),
                       ),
-                      trailing: wordFound[index]
-                          ? const Icon(Icons.check, color: Colors.green)
-                          : null,
-                    );
-                  },
+                    ),
+                    const Text(
+                      'Words to Find',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: wordsToFind.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              wordsToFind[index] +
+                                  "  (" +
+                                  ArabicWordsToFind[index] +
+                                  ")",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: wordFound[index]
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                color: wordFound[index]
+                                    ? Colors.green
+                                    : Colors.black,
+                              ),
+                            ),
+                            trailing: wordFound[index]
+                                ? const Icon(Icons.check, color: Colors.green)
+                                : null,
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              var rng = Random();
+                              setState(() {
+                                wordsToFind.clear();
+                                ArabicWordsToFind.clear();
+                                var previous = [];
+                                var int;
+                                for (var i = 0; i < 5; i++) {
+                                  do {
+                                    int = rng.nextInt(49);
+                                  } while (previous.contains(int));
+                                  previous.add(int);
+                                  wordsToFind.add(wordsToFindrange[int]);
+                                  ArabicWordsToFind.add(
+                                      ArabicWordsToFindrange[int]);
+                                }
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            super.widget));
+                              });
+                            },
+                            child: const Text('Regenerate')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              _controller.pause();
+                            },
+                            child: const Text('Pause')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              _controller.start();
+                            },
+                            child: const Text('Start')),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              const SizedBox(height: 10,),
-             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-               children: [
-                 ElevatedButton(onPressed: (){
-                  var rng = Random();
-                  setState(() {
-                    wordsToFind.clear();
-                    ArabicWordsToFind.clear();
-                    var previous = [];
-                    var int;
-                   for (var i = 0; i < 5; i++) {
-                    do{
-                        int = rng.nextInt(49);
-                    }while(previous.contains(int));
-                    previous.add(int);
-   wordsToFind.add(wordsToFindrange[int]);
-   ArabicWordsToFind.add(ArabicWordsToFindrange[int]);
-  }
-  Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => super.widget));
-                  });
-                 }, child: const Text('Regenerate')),
-                 const SizedBox(width: 10,),
-                 ElevatedButton(onPressed: (){
-                  _controller.pause();
-                 }, child: const Text('Pause')),
-                 const SizedBox(width: 10,),
-                 ElevatedButton(onPressed: (){
-                  _controller.start();
-                 }, child: const Text('Start')),
-                 
-               ],
-             )
-            ],
-          ),
-        ),
-      ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           solvePuzzle();
           _controller.dispose();
-           var point = 0;
-                  if(order < 59){
-                    point = 5;
-                  }else if(order < 159 && order > 59){
-                    point = 4;
-                  }else if(order < 259 && order > 159){
-                    point = 3;
-                  }else if(order < 359 && order > 259){
-                    point = 2;
-                  }else{
-                    point = 1;
-                  }
-          
-
+          var point = 0;
+          if (order < 59) {
+            point = 5;
+          } else if (order < 159 && order > 59) {
+            point = 4;
+          } else if (order < 259 && order > 159) {
+            point = 3;
+          } else if (order < 359 && order > 259) {
+            point = 2;
+          } else {
+            point = 1;
+          }
         },
         child: const Icon(Icons.lightbulb),
       ),
@@ -272,51 +301,52 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> with TickerProvider
       }
     });
   }
- void checkWord() {
-  String selectedWord = '';
-  for (int i = 0; i < wordhighlighted.length; i++) {
-    if (wordhighlighted[i]) {
-      selectedWord += letters[i];
-    }
-  }
-  if (selectedWord.isNotEmpty) {
-    if (completedWords.contains(selectedWord)) {
-      // Word already completed
-      return;
-    }
-    if (wordsToFind.contains(selectedWord)) {
-      // Valid word found
-      int index = wordsToFind.indexOf(selectedWord);
-      setState(() {
-        print('Word completed: $selectedWord');
-        wordFound[index] = true;
-        completedWords.add(selectedWord);
-        wordhighlighted = List.filled(gridSize * gridSize, false);
-             });
-    }
-    if (completedWords.length == wordsToFind.length) {
-            // All words found, navigate to the next page
-            _controller.pause(); // Stop the timer before navigation
-           var point = 0;
-                  if(order < 59){
-                    point = 5;
-                  }else if(order < 159 && order > 59){
-                    point = 4;
-                  }else if(order < 259 && order > 159){
-                    point = 3;
-                  }else if(order < 359 && order > 259){
-                    point = 2;
-                  }else{
-                    point = 1;
-                  }
-             Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => GameResult('Search Words',time,point)),
-        );
-          }
-  }
-}
 
+  void checkWord() {
+    String selectedWord = '';
+    for (int i = 0; i < wordhighlighted.length; i++) {
+      if (wordhighlighted[i]) {
+        selectedWord += letters[i];
+      }
+    }
+    if (selectedWord.isNotEmpty) {
+      if (completedWords.contains(selectedWord)) {
+        // Word already completed
+        return;
+      }
+      if (wordsToFind.contains(selectedWord)) {
+        // Valid word found
+        int index = wordsToFind.indexOf(selectedWord);
+        setState(() {
+          print('Word completed: $selectedWord');
+          wordFound[index] = true;
+          completedWords.add(selectedWord);
+          wordhighlighted = List.filled(gridSize * gridSize, false);
+        });
+      }
+      if (completedWords.length == wordsToFind.length) {
+        // All words found, navigate to the next page
+        _controller.pause(); // Stop the timer before navigation
+        var point = 0;
+        if (order < 59) {
+          point = 5;
+        } else if (order < 159 && order > 59) {
+          point = 4;
+        } else if (order < 259 && order > 159) {
+          point = 3;
+        } else if (order < 359 && order > 259) {
+          point = 2;
+        } else {
+          point = 1;
+        }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GameResult('Search Words', time, point)),
+        );
+      }
+    }
+  }
 
   bool highlightWord(String word) {
     final List<int> wordIndices = [];

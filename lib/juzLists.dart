@@ -103,7 +103,7 @@ class _JuzListState extends State<JuzList> {
                                   : const Center(
                                       child: CircularProgressIndicator(),
                                     ),
-                              onTap: () {
+                              onTap: () async {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -364,8 +364,7 @@ class _JuzListState extends State<JuzList> {
                       height: 6,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        print(items[index]);
+                      onTap: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -174,6 +174,58 @@ class _MyHomePageState extends State<MyHomePage> {
   //   ];
   //   print("working");
   //   for (int i = 0; i < data.length; i++) {
+  //     await FirebaseFirestore.instance.collection('QuranWords').add({
+  //       "Record Number": data[i]['Record Number'],
+  //       "Words": data[i]['Words'],
+  //       "Meaning": data[i]['Meaning'],
+  //       "Root": (data[i]['Root'] != null) ? data[i]['Root'] : "",
+  //       "Surah": data[i]['Surah'],
+  //       "Ayah": data[i]['Ayah']
+  //     });
+  //     // await FirebaseFirestore.instance.collection("Ayahs").where('totalverse', isEqualTo: data[i]['totalverse']).get().then((value) {
+  //     //   value.docs.forEach((element) {
+  //     //   //  print(element.id);
+  //     //      FirebaseFirestore.instance.collection("Ayahs").doc(element.id).update({
+  //     //       'verse': data[i]['verse']
+  //     //      });
+  //     //   });
+  //     // },);
+  //     print(i);
+  //   }
+  // }
+
+  // getdata() async {
+  //   List data = [
+
+  //   ];
+  //   print("working");
+  //   for (int i = 0; i < data.length; i++) {
+  //     await FirebaseFirestore.instance.collection('QuranWords').add({
+  //       "Record Number": data[i]['Record Number'],
+  //       "Words": data[i]['Words'],
+  //       "Meaning": data[i]['Meaning'],
+  //       "Root": (data[i]['Root'] != null) ? data[i]['Root'] : "",
+  //       "Surah": data[i]['Surah'],
+  //       "Ayah": data[i]['Ayah']
+  //     });
+  //     // await FirebaseFirestore.instance.collection("Ayahs").where('totalverse', isEqualTo: data[i]['totalverse']).get().then((value) {
+  //     //   value.docs.forEach((element) {
+  //     //   //  print(element.id);
+  //     //      FirebaseFirestore.instance.collection("Ayahs").doc(element.id).update({
+  //     //       'verse': data[i]['verse']
+  //     //      });
+  //     //   });
+  //     // },);
+  //     print(i);
+  //   }
+  // }
+
+  // getdata() async {
+  //   List data = [
+
+  //   ];
+  //   print("working");
+  //   for (int i = 0; i < data.length; i++) {
   //     // var meaning = '';
   //     // var meaningEng = '';
   //     // if(data[i]['meaning'] != null){
@@ -330,9 +382,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, dynamic> arr = {};
     var uservalue = await FirebaseAuth.instance.signInAnonymously();
     var doc = FirebaseFirestore.instance.collection("UserRecord");
-    var doc1 = FirebaseFirestore.instance
-        .collection("SurahLists")
-        .orderBy("index");
+    var doc1 =
+        FirebaseFirestore.instance.collection("SurahLists").orderBy("index");
     await FirebaseFirestore.instance
         .collection("UserRecord")
         .where("UserId", isEqualTo: uservalue.user?.uid)
@@ -528,7 +579,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     //  saveAndUploadToFirebaseStorage();
-    //  getdata();
+    //getdata();
     getMethod();
     getFontSize();
     getArabicFontSize();
@@ -986,7 +1037,8 @@ class SelectCard extends StatelessWidget {
             case "AlQuran":
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PageRouteJuzScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const PageRouteJuzScreen()),
               );
               break;
             case "Continue":
