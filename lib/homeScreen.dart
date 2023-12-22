@@ -634,172 +634,177 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: IgnorePointer(
           ignoring: isOpened,
-          child: Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => toggleMenu(),
-              ),
+          child: SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () => toggleMenu(),
+                ),
 
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/image/background.jpg"),
-                    fit: BoxFit.cover,
+                flexibleSpace: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.green[400]!, Colors.green[700]!],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   ),
                 ),
-              ),
-              //  backgroundColor: HexColor("#30652c"),
-              title: Row(
-                children: [
-                  // Spacer(),
-                  Container(
-                    margin: const EdgeInsets.only(left: 45),
-                    child: Text(
-                      widget.title,
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: HexColor("#ffde59"),
-                          fontFamily: 'Schyler'),
-                    ),
-                  ),
-                  const Spacer(),
-                  // CircleAvatar(
-                  //   radius: 18,
-                  //   backgroundColor: Color(0xffFDCF09),
-                  //   child: main.url != null
-                  //       ? ClipRRect(
-                  //           borderRadius: BorderRadius.circular(50),
-                  //           child: Image.file(
-                  //             main.url,
-                  //             width: 100,
-                  //             height: 100,
-                  //             fit: BoxFit.cover,
-                  //           ),
-                  //         )
-                  //       : Container(
-                  //           decoration: BoxDecoration(
-                  //               color: Colors.grey[200],
-                  //               borderRadius: BorderRadius.circular(50)),
-                  //           width: 100,
-                  //           height: 100,
-                  //           child: Icon(
-                  //             Icons.camera_alt,
-                  //             color: Colors.grey[800],
-                  //           ),
-                  //         ),
-                  // ),
-                  IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                                scrollable: true,
-                                title: const Text('Options'),
-                                content: StatefulBuilder(
-                                  // You need this, notice the parameters below:
-                                  builder: (BuildContext context,
-                                      StateSetter setState) {
-                                    return Column(
-                                        // Then, the content of your dialog.
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          QuantityInput(
-                                              step: 10,
-                                              maxValue: 60,
-                                              minValue: 10,
-                                              label: 'Text Font Size',
-                                              value: textFontSize,
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                    textFontSize = double.parse(
-                                                        value.replaceAll(
-                                                            ',', ''));
-                                                    saveTextFont(double.parse(
-                                                        value.replaceAll(
-                                                            ',', '')));
-                                                  })),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          QuantityInput(
-                                              step: 10,
-                                              maxValue: 60,
-                                              minValue: 20,
-                                              label: 'Arabic Text Font Size',
-                                              value: arabictextFontSize,
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                    arabictextFontSize =
-                                                        double.parse(
-                                                            value.replaceAll(
-                                                                ',', ''));
-                                                    saveArabicTextFont(
-                                                        double.parse(
-                                                            value.replaceAll(
-                                                                ',', '')));
-                                                  })),
-                                        ]);
-                                  },
-                                ));
-                          },
-                        );
-                      },
-                      icon: const Icon(Icons.settings))
-                ],
-              ),
-            ),
-            body: SingleChildScrollView(
-              child: Center(
-                child: Column(
+                //  backgroundColor: HexColor("#30652c"),
+                title: Row(
                   children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Image.asset(
-                      "assets/image/Qurankhwani.png",
-                      height: 200,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Center(
+                    // Spacer(),
+                    Container(
+                      margin: const EdgeInsets.only(left: 45),
                       child: Text(
-                        _today.toFormat("MMMM dd yyyy"),
+                        widget.title,
                         style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: HexColor("#2a6e2d"),
+                            color: HexColor("#ffde59"),
                             fontFamily: 'Schyler'),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.shortestSide,
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                              image: AssetImage("assets/image/background.jpg"),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.circular(10),
-                        ), // constrain height
-                        child: GridView.count(
-                            crossAxisCount: 2,
-                            //physics: const NeverScrollableScrollPhysics(),
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 16.0,
-                            children: List.generate(choices.length, (index) {
-                              return Center(
-                                child: SelectCard(choice: choices[index]),
-                              );
-                            })),
-                      ),
-                    )
+                    const Spacer(),
+                    // CircleAvatar(
+                    //   radius: 18,
+                    //   backgroundColor: Color(0xffFDCF09),
+                    //   child: main.url != null
+                    //       ? ClipRRect(
+                    //           borderRadius: BorderRadius.circular(50),
+                    //           child: Image.file(
+                    //             main.url,
+                    //             width: 100,
+                    //             height: 100,
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         )
+                    //       : Container(
+                    //           decoration: BoxDecoration(
+                    //               color: Colors.grey[200],
+                    //               borderRadius: BorderRadius.circular(50)),
+                    //           width: 100,
+                    //           height: 100,
+                    //           child: Icon(
+                    //             Icons.camera_alt,
+                    //             color: Colors.grey[800],
+                    //           ),
+                    //         ),
+                    // ),
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  scrollable: true,
+                                  title: const Text('Options'),
+                                  content: StatefulBuilder(
+                                    // You need this, notice the parameters below:
+                                    builder: (BuildContext context,
+                                        StateSetter setState) {
+                                      return Column(
+                                          // Then, the content of your dialog.
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            QuantityInput(
+                                                step: 10,
+                                                maxValue: 60,
+                                                minValue: 10,
+                                                label: 'Text Font Size',
+                                                value: textFontSize,
+                                                onChanged: (value) =>
+                                                    setState(() {
+                                                      textFontSize =
+                                                          double.parse(
+                                                              value.replaceAll(
+                                                                  ',', ''));
+                                                      saveTextFont(double.parse(
+                                                          value.replaceAll(
+                                                              ',', '')));
+                                                    })),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            QuantityInput(
+                                                step: 10,
+                                                maxValue: 60,
+                                                minValue: 20,
+                                                label: 'Arabic Text Font Size',
+                                                value: arabictextFontSize,
+                                                onChanged: (value) =>
+                                                    setState(() {
+                                                      arabictextFontSize =
+                                                          double.parse(
+                                                              value.replaceAll(
+                                                                  ',', ''));
+                                                      saveArabicTextFont(
+                                                          double.parse(
+                                                              value.replaceAll(
+                                                                  ',', '')));
+                                                    })),
+                                          ]);
+                                    },
+                                  ));
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.settings))
                   ],
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Image.asset(
+                        "assets/image/Qurankhwani.png",
+                        height: 200,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: Text(
+                          _today.toFormat("MMMM dd yyyy"),
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: HexColor("#2a6e2d"),
+                              fontFamily: 'Schyler'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.shortestSide,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.green[400]!, Colors.green[700]!],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ), // constrain height
+                          child: GridView.count(
+                              crossAxisCount: 2,
+                              //physics: const NeverScrollableScrollPhysics(),
+                              crossAxisSpacing: 8.0,
+                              mainAxisSpacing: 16.0,
+                              children: List.generate(choices.length, (index) {
+                                return Center(
+                                  child: SelectCard(choice: choices[index]),
+                                );
+                              })),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

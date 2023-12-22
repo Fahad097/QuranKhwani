@@ -92,172 +92,177 @@ class _PuzzleGameState extends State<PuzzleGame> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(
         backgroundColor: Colors.blue, textStyle: const TextStyle(fontSize: 16));
-    return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 20),
-            child: Text(
-              'Jigsaw Puzzle',
-              style: TextStyle(fontSize: 36),
-            ),
-          ),
-          CustomTimer(
-              controller: _controller,
-              builder: (state, remaining) {
-                // Build the widget you want!
-                time =
-                    "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
-                var orders =
-                    remaining.hours + remaining.minutes + remaining.seconds;
-                order = int.parse(orders);
-                return Text(
-                    "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                    style: const TextStyle(fontSize: 24.0));
-              }),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                itemCount: dataModel.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: rows,
-                  mainAxisSpacing: 0.5,
-                  crossAxisSpacing: 0.5,
-                ),
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: DragTarget<DataModel>(
-                      builder: (BuildContext context,
-                          List<Object?> candidateData,
-                          List<dynamic> rejectedData) {
-                        return Container(
-                          color: dataModel[index].dataModel == null
-                              ? Colors.grey
-                              : Colors.white,
-                          child: Center(
-                            child: dataModel[index].dataModel == null
-                                ? Container()
-                                : Image.asset(
-                                    'assets/image/jigsaw/${dataModel[index].number}.png',
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                          ),
-                        );
-                      },
-                      onAccept: (data) {
-                        setState(() {
-                          if (data.number == dataModel[index].number) {
-                            dataModel[index].dataModel = data;
-                            dataModel2.remove(data);
-                            data.imagePath =
-                                ''; // Clear the imagePath so it can't be dropped again
-                            if (isPuzzleComplete()) {
-                              _controller.reset();
-                              var point = 0;
-                              if (order < 59) {
-                                point = 5;
-                              } else if (order < 159 && order > 59) {
-                                point = 4;
-                              } else if (order < 259 && order > 159) {
-                                point = 3;
-                              } else if (order < 359 && order > 259) {
-                                point = 2;
-                              } else {
-                                point = 1;
-                              }
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GameResult(
-                                        'Jigsaw Puzzles', time, point)),
-                              );
-                            }
-                          }
-                        });
-                      },
-                      onWillAccept: (data) {
-                        return data?.number == dataModel[index].number;
-                      },
-                    ),
-                  );
-                },
+    return SafeArea(
+      child: Scaffold(
+          body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 20),
+              child: Text(
+                'Jigsaw Puzzle',
+                style: TextStyle(fontSize: 36),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.grey,
-          ),
-          SizedBox(
-            height: 200,
-            child: CarouselSlider.builder(
-              itemCount: dataModel2.length,
-              options: CarouselOptions(
-                height: 100,
-                enableInfiniteScroll: false,
-                aspectRatio: 5.0,
-                viewportFraction: 0.6,
-              ),
-              itemBuilder: (BuildContext context, int index, int realIndex) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Draggable<DataModel>(
-                    data: dataModel2[index],
-                    feedback: Material(
-                      child: Image.asset(
-                        'assets/image/jigsaw/${dataModel2[index].number}.png',
-                        width: 80,
-                        height: 80,
-                      ),
-                    ),
-                    childWhenDragging: Container(),
-                    child: Image.asset(
-                      'assets/image/jigsaw/${dataModel2[index].number}.png',
-                      width: 80,
-                      height: 80,
-                    ),
+            CustomTimer(
+                controller: _controller,
+                builder: (state, remaining) {
+                  // Build the widget you want!
+                  time =
+                      "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
+                  var orders =
+                      remaining.hours + remaining.minutes + remaining.seconds;
+                  order = int.parse(orders);
+                  return Text(
+                      "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
+                      style: const TextStyle(fontSize: 24.0));
+                }),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.builder(
+                  itemCount: dataModel.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: rows,
+                    mainAxisSpacing: 0.5,
+                    crossAxisSpacing: 0.5,
                   ),
-                );
-              },
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: DragTarget<DataModel>(
+                        builder: (BuildContext context,
+                            List<Object?> candidateData,
+                            List<dynamic> rejectedData) {
+                          return Container(
+                            color: dataModel[index].dataModel == null
+                                ? Colors.grey
+                                : Colors.white,
+                            child: Center(
+                              child: dataModel[index].dataModel == null
+                                  ? Container()
+                                  : Image.asset(
+                                      'assets/image/jigsaw/${dataModel[index].number}.png',
+                                      width: 80,
+                                      height: 80,
+                                    ),
+                            ),
+                          );
+                        },
+                        onAccept: (data) {
+                          setState(() {
+                            if (data.number == dataModel[index].number) {
+                              dataModel[index].dataModel = data;
+                              dataModel2.remove(data);
+                              data.imagePath =
+                                  ''; // Clear the imagePath so it can't be dropped again
+                              if (isPuzzleComplete()) {
+                                _controller.reset();
+                                var point = 0;
+                                if (order < 59) {
+                                  point = 5;
+                                } else if (order < 159 && order > 59) {
+                                  point = 4;
+                                } else if (order < 259 && order > 159) {
+                                  point = 3;
+                                } else if (order < 359 && order > 259) {
+                                  point = 2;
+                                } else {
+                                  point = 1;
+                                }
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GameResult(
+                                          'Jigsaw Puzzles', time, point)),
+                                );
+                              }
+                            }
+                          });
+                        },
+                        onWillAccept: (data) {
+                          return data?.number == dataModel[index].number;
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-          Divider(
-            color: Colors.grey,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: style,
-                onPressed: () async {
-                  _controller.reset();
-                  _controller.start();
-                },
-                child: const Text('Generate'),
+            Divider(
+              color: Colors.grey,
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 200,
+                child: CarouselSlider.builder(
+                  itemCount: dataModel2.length,
+                  options: CarouselOptions(
+                    height: 100,
+                    enableInfiniteScroll: false,
+                    aspectRatio: 5.0,
+                    viewportFraction: 0.6,
+                  ),
+                  itemBuilder:
+                      (BuildContext context, int index, int realIndex) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Draggable<DataModel>(
+                        data: dataModel2[index],
+                        feedback: Material(
+                          child: Image.asset(
+                            'assets/image/jigsaw/${dataModel2[index].number}.png',
+                            width: 80,
+                            height: 80,
+                          ),
+                        ),
+                        childWhenDragging: Container(),
+                        child: Image.asset(
+                          'assets/image/jigsaw/${dataModel2[index].number}.png',
+                          width: 80,
+                          height: 80,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
-              const SizedBox(width: 16),
-              ElevatedButton(
-                style: style,
-                onPressed: () {
-                  _controller.pause();
-                },
-                child: const Text('Pause'),
-              ),
-              const SizedBox(width: 16),
-              ElevatedButton(
-                style: style,
-                onPressed: () {
-                  _controller.reset();
-                },
-                child: const Text('Clear'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ));
+            ),
+            Divider(
+              color: Colors.grey,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: style,
+                  onPressed: () async {
+                    _controller.reset();
+                    _controller.start();
+                  },
+                  child: const Text('Generate'),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    _controller.pause();
+                  },
+                  child: const Text('Pause'),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    _controller.reset();
+                  },
+                  child: const Text('Clear'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      )),
+    );
   }
 }

@@ -236,10 +236,12 @@ class _SurahPageViewState extends State<SurahPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/background.jpg"),
-              fit: BoxFit.cover),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.green[400]!, Colors.green[700]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         child: Column(
           children: [

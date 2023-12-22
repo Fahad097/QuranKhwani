@@ -11,30 +11,34 @@ class JigsawScreen extends StatefulWidget {
 class _JigsawScreenState extends State<JigsawScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Display the image
-            Image.asset(
-              'assets/image/jigsaw/jigsaw.png', // Replace with your image asset path
-              width: 300,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Display the image
+                Image.asset(
+                  'assets/image/jigsaw/jigsaw.png', // Replace with your image asset path
+                  width: 300,
+                ),
 
-            SizedBox(height: 20),
+                SizedBox(height: 20),
 
-            // Create a "Start" button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => PuzzleGame()),
-                );
-              },
-              child: Text('Start'),
+                // Create a "Start" button
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => PuzzleGame()),
+                    );
+                  },
+                  child: Text('Start'),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -53,7 +53,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen>
     final random = Random();
     final List<List<String>> tempGrid = List.generate(
       gridSize,
-      (_) => List.generate(gridSize, (_) => ''),
+      (index) => List.generate(gridSize, (index) => ''),
     );
 
     for (String word in wordsToFind) {
@@ -113,37 +113,44 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen>
   }
 
   @override
+  void dispose() {
+    // Dispose of your AnimationControllers
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Words Puzzle'),
-      ),
-      body: (wordsToFind == [])
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    CustomTimer(
-                        controller: _controller,
-                        builder: (state, remaining) {
-                          // Build the widget you want!
-                          time =
-                              "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
-                          var orders = remaining.hours +
-                              remaining.minutes +
-                              remaining.seconds;
-                          order = int.parse(orders);
-                          return Text(
-                              "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                              style: const TextStyle(fontSize: 24.0));
-                        }),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height - 400,
-                      child: Expanded(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Search Words Puzzle'),
+        ),
+        body: (wordsToFind == [])
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      CustomTimer(
+                          controller: _controller,
+                          builder: (state, remaining) {
+                            // Build the widget you want!
+                            time =
+                                "${remaining.hours}:${remaining.minutes}:${remaining.seconds}";
+                            var orders = remaining.hours +
+                                remaining.minutes +
+                                remaining.seconds;
+                            order = int.parse(orders);
+                            return Text(
+                                "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
+                                style: const TextStyle(fontSize: 24.0));
+                          }),
+                      Expanded(
                         child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -177,113 +184,114 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen>
                           itemCount: gridSize * gridSize,
                         ),
                       ),
-                    ),
-                    const Text(
-                      'Words to Find',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
+                      const Text(
+                        'Words to Find',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: wordsToFind.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                              wordsToFind[index] +
-                                  "  (" +
-                                  ArabicWordsToFind[index] +
-                                  ")",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: wordFound[index]
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                                color: wordFound[index]
-                                    ? Colors.green
-                                    : Colors.black,
+                      const SizedBox(height: 10.0),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: wordsToFind.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(
+                                wordsToFind[index] +
+                                    "  (" +
+                                    ArabicWordsToFind[index] +
+                                    ")",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: wordFound[index]
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: wordFound[index]
+                                      ? Colors.green
+                                      : Colors.black,
+                                ),
                               ),
-                            ),
-                            trailing: wordFound[index]
-                                ? const Icon(Icons.check, color: Colors.green)
-                                : null,
-                          );
-                        },
+                              trailing: wordFound[index]
+                                  ? const Icon(Icons.check, color: Colors.green)
+                                  : null,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              var rng = Random();
-                              setState(() {
-                                wordsToFind.clear();
-                                ArabicWordsToFind.clear();
-                                var previous = [];
-                                var int;
-                                for (var i = 0; i < 5; i++) {
-                                  do {
-                                    int = rng.nextInt(49);
-                                  } while (previous.contains(int));
-                                  previous.add(int);
-                                  wordsToFind.add(wordsToFindrange[int]);
-                                  ArabicWordsToFind.add(
-                                      ArabicWordsToFindrange[int]);
-                                }
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            super.widget));
-                              });
-                            },
-                            child: const Text('Regenerate')),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              _controller.pause();
-                            },
-                            child: const Text('Pause')),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              _controller.start();
-                            },
-                            child: const Text('Start')),
-                      ],
-                    )
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                var rng = Random();
+                                setState(() {
+                                  wordsToFind.clear();
+                                  ArabicWordsToFind.clear();
+                                  var previous = [];
+                                  var int;
+                                  for (var i = 0; i < 5; i++) {
+                                    do {
+                                      int = rng.nextInt(49);
+                                    } while (previous.contains(int));
+                                    previous.add(int);
+                                    wordsToFind.add(wordsToFindrange[int]);
+                                    ArabicWordsToFind.add(
+                                        ArabicWordsToFindrange[int]);
+                                  }
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              super.widget));
+                                });
+                              },
+                              child: const Text('Regenerate')),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                _controller.pause();
+                              },
+                              child: const Text('Pause')),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                _controller.start();
+                              },
+                              child: const Text('Start')),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          solvePuzzle();
-          _controller.dispose();
-          var point = 0;
-          if (order < 59) {
-            point = 5;
-          } else if (order < 159 && order > 59) {
-            point = 4;
-          } else if (order < 259 && order > 159) {
-            point = 3;
-          } else if (order < 359 && order > 259) {
-            point = 2;
-          } else {
-            point = 1;
-          }
-        },
-        child: const Icon(Icons.lightbulb),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            solvePuzzle();
+
+            ///  _controller.dispose();
+            var point = 0;
+            if (order < 59) {
+              point = 5;
+            } else if (order < 159 && order > 59) {
+              point = 4;
+            } else if (order < 259 && order > 159) {
+              point = 3;
+            } else if (order < 359 && order > 259) {
+              point = 2;
+            } else {
+              point = 1;
+            }
+          },
+          child: const Icon(Icons.lightbulb),
+        ),
       ),
     );
   }

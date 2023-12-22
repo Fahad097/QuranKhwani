@@ -103,93 +103,97 @@ class _RecordJuzPageState extends State<RecordJuzPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/background.jpg"),
-              fit: BoxFit.cover),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.green[400]!, Colors.green[700]!],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 55),
-                  child: Text(
-                    "Total Count",
-                    style: TextStyle(
-                        color: HexColor("#ffde59"),
-                        fontFamily: 'Schyler',
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: list.JuzCount.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        color: HexColor("#ffde59"),
-                        child: ListTile(
-                          trailing: Text(
-                            '${list.JuzCount[list.JuzNameList[index]]} ',
-                            style: TextStyle(
-                              color: HexColor("#2a6e2d"),
-                              fontSize: 30,
+                  Container(
+                    margin: const EdgeInsets.only(left: 55),
+                    child: Text(
+                      "Total Count",
+                      style: TextStyle(
+                          color: HexColor("#ffde59"),
+                          fontFamily: 'Schyler',
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: list.JuzCount.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          color: HexColor("#ffde59"),
+                          child: ListTile(
+                            trailing: Text(
+                              '${list.JuzCount[list.JuzNameList[index]]} ',
+                              style: TextStyle(
+                                color: HexColor("#2a6e2d"),
+                                fontSize: 30,
+                              ),
+                            ),
+                            title: Text(
+                              '${list.JuzNameList[index]} ',
+                              style: TextStyle(
+                                color: HexColor("#2a6e2d"),
+                                fontSize: textFontSize,
+                                fontFamily: 'Schyler',
+                              ),
                             ),
                           ),
-                          title: Text(
-                            '${list.JuzNameList[index]} ',
-                            style: TextStyle(
-                              color: HexColor("#2a6e2d"),
-                              fontSize: textFontSize,
-                              fontFamily: 'Schyler',
-                            ),
-                          ),
-                        ),
-                      );
-                    })),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(canvasColor: Colors.transparent),
-                    child: BottomNavigationBar(
-                      elevation: 0,
-                      currentIndex: _selectedIndex,
-                      onTap: _onItemTapped,
-                      selectedItemColor: HexColor("#ffde59"),
-                      items: const [
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.home), label: 'Home'),
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.list), label: 'Surah List'),
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.format_list_numbered),
-                            label: 'Count'),
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.group), label: 'Groups'),
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.bookmark), label: 'bookmarks'),
-                        BottomNavigationBarItem(
-                            icon: Icon(Icons.panorama_fisheye_rounded),
-                            label: 'Duas')
-                      ],
-                    ))),
-          ],
+                        );
+                      })),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(canvasColor: Colors.transparent),
+                      child: BottomNavigationBar(
+                        elevation: 0,
+                        currentIndex: _selectedIndex,
+                        onTap: _onItemTapped,
+                        selectedItemColor: HexColor("#ffde59"),
+                        items: const [
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.home), label: 'Home'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.list), label: 'Surah List'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.format_list_numbered),
+                              label: 'Count'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.group), label: 'Groups'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.bookmark), label: 'bookmarks'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.panorama_fisheye_rounded),
+                              label: 'Duas')
+                        ],
+                      ))),
+            ],
+          ),
         ),
       ),
     );

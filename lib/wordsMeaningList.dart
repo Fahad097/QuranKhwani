@@ -19,79 +19,83 @@ class _WordMeaningListState extends State<WordMeaningList> {
           color: HexColor("#2a6e2d"),
           fontSize: arabictextFontSize,
         );
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/background.jpg"),
-              fit: BoxFit.cover),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.green[400]!, Colors.green[700]!],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 55),
-                  child: Text(
-                    "Quranic Words",
-                    style: TextStyle(
-                        color: HexColor("#ffde59"),
-                        fontFamily: 'Schyler',
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-                child: FutureBuilder(
-                    future:
-                        FirebaseFirestore.instance.collection("words").get(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                  Container(
+                    margin: const EdgeInsets.only(left: 55),
+                    child: Text(
+                      "Quranic Words",
+                      style: TextStyle(
+                          color: HexColor("#ffde59"),
+                          fontFamily: 'Schyler',
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                  child: FutureBuilder(
+                      future:
+                          FirebaseFirestore.instance.collection("words").get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data?.docs.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot ds = snapshot.data!.docs[index];
-                            var arabic = ds['Arabic Word'];
-                            var meaning = ds['English Meaning'];
-                            return Card(
-                              color: HexColor("#ffde59"),
-                              child: ListTile(
-                                trailing: Text(
-                                  arabic,
-                                  style:
-                                      GoogleFonts.lateef(textStyle: display1),
-                                ),
-                                title: Text(
-                                  meaning,
-                                  style: TextStyle(
-                                    color: HexColor("#2a6e2d"),
-                                    fontSize: textFontSize,
-                                    fontFamily: 'Schyler',
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot ds = snapshot.data!.docs[index];
+                              var arabic = ds['Arabic Word'];
+                              var meaning = ds['English Meaning'];
+                              return Card(
+                                color: HexColor("#ffde59"),
+                                child: ListTile(
+                                  trailing: Text(
+                                    arabic,
+                                    style:
+                                        GoogleFonts.lateef(textStyle: display1),
+                                  ),
+                                  title: Text(
+                                    meaning,
+                                    style: TextStyle(
+                                      color: HexColor("#2a6e2d"),
+                                      fontSize: textFontSize,
+                                      fontFamily: 'Schyler',
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          });
-                    })),
-          ],
+                              );
+                            });
+                      })),
+            ],
+          ),
         ),
       ),
     );

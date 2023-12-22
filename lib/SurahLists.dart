@@ -275,155 +275,161 @@ class _SurahListState extends State<SurahList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/image/background.jpg"),
-            fit: BoxFit.cover),
-      ),
-      child: Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 20,
+    return SafeArea(
+      child: Scaffold(
+          body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.green[400]!, Colors.green[700]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
-                onPressed: () {
-                  Navigator.pop(context);
+        ),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 55),
+                  child: Text(
+                    "Surah List",
+                    style: TextStyle(
+                        color: HexColor("#ffde59"),
+                        fontFamily: 'Schyler',
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                style: TextStyle(color: HexColor("#ffde59")),
+                cursorColor: HexColor("#ffde59"),
+                onChanged: (value) {
+                  filterSearchResults(value);
                 },
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 55),
-                child: Text(
-                  "Surah List",
-                  style: TextStyle(
-                      color: HexColor("#ffde59"),
-                      fontFamily: 'Schyler',
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              style: TextStyle(color: HexColor("#ffde59")),
-              cursorColor: HexColor("#ffde59"),
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              controller: editingController,
-              decoration: InputDecoration(
-                labelText: "Search",
-                labelStyle: TextStyle(color: HexColor("#ffde59")),
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white, width: 2.0),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                //suffixIcon: Icon(Icons.search),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white, width: 2.0),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusColor: HexColor("#ffde59"),
-                //suffixIconColor: HexColor("#a79162"),
-                //iconColor: HexColor("#a79162"),
+                controller: editingController,
+                decoration: InputDecoration(
+                  labelText: "Search",
+                  labelStyle: TextStyle(color: HexColor("#ffde59")),
+                  border: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 2.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  //suffixIcon: Icon(Icons.search),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 2.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusColor: HexColor("#ffde59"),
+                  //suffixIconColor: HexColor("#a79162"),
+                  //iconColor: HexColor("#a79162"),
 
-                //  prefixIcon: Icon(Icons.search),
+                  //  prefixIcon: Icon(Icons.search),
+                ),
               ),
             ),
-          ),
-          _buildLastBookmarkView(HexColor("#68A629")),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final display1 =
-                    Theme.of(context).textTheme.headline6!.copyWith(
-                          color: HexColor("#2a6e2d"),
-                          fontSize: arabictextFontSize,
-                        );
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SurahPageView(
-                                  items[index],
-                                  0,
-                                  surahNo[index].toString(),
-                                  surahAyah[index].toString(),
-                                  surahPage[index].toString(),
-                                  surahEndPages[index].toString(),
-                                  0,
-                                  Colors.green)),
-                        );
-                      },
-                      child: Card(
-                        color: HexColor("#ffde59"),
-                        child: ListTile(
-                          trailing: Text(
-                            '${itemsAr[index]} ',
-                            style: GoogleFonts.lateef(textStyle: display1),
-                          ),
-                          title: Text(
-                            '${items[index]} ',
-                            style: TextStyle(
-                              color: HexColor("#2a6e2d"),
-                              fontSize: textFontSize,
-                              fontFamily: 'Schyler',
+            _buildLastBookmarkView(HexColor("#68A629")),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final display1 =
+                      Theme.of(context).textTheme.headline6!.copyWith(
+                            color: HexColor("#2a6e2d"),
+                            fontSize: arabictextFontSize,
+                          );
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SurahPageView(
+                                    items[index],
+                                    0,
+                                    surahNo[index].toString(),
+                                    surahAyah[index].toString(),
+                                    surahPage[index].toString(),
+                                    surahEndPages[index].toString(),
+                                    0,
+                                    Colors.green)),
+                          );
+                        },
+                        child: Card(
+                          color: HexColor("#ffde59"),
+                          child: ListTile(
+                            trailing: Text(
+                              '${itemsAr[index]} ',
+                              style: GoogleFonts.lateef(textStyle: display1),
+                            ),
+                            title: Text(
+                              '${items[index]} ',
+                              style: TextStyle(
+                                color: HexColor("#2a6e2d"),
+                                fontSize: textFontSize,
+                                fontFamily: 'Schyler',
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Theme(
-                  data: Theme.of(context)
-                      .copyWith(canvasColor: Colors.transparent),
-                  child: BottomNavigationBar(
-                    elevation: 0,
-                    currentIndex: _selectedIndex,
-                    onTap: _onItemTapped,
-                    selectedItemColor: HexColor("#ffde59"),
-                    items: const [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: 'Home'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.list), label: 'Surah List'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.format_list_numbered),
-                          label: 'Count'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.group), label: 'Groups'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.bookmark), label: 'bookmarks'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.panorama_fisheye_rounded),
-                          label: 'Duas')
                     ],
-                  ))),
-        ],
-      ),
-    ));
+                  );
+                },
+              ),
+            ),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Theme(
+                    data: Theme.of(context)
+                        .copyWith(canvasColor: Colors.transparent),
+                    child: BottomNavigationBar(
+                      elevation: 0,
+                      currentIndex: _selectedIndex,
+                      onTap: _onItemTapped,
+                      selectedItemColor: HexColor("#ffde59"),
+                      items: const [
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.home), label: 'Home'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.list), label: 'Surah List'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.format_list_numbered),
+                            label: 'Count'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.group), label: 'Groups'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.bookmark), label: 'bookmarks'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.panorama_fisheye_rounded),
+                            label: 'Duas')
+                      ],
+                    ))),
+          ],
+        ),
+      )),
+    );
   }
 }

@@ -78,111 +78,113 @@ class _GameResultState extends State<GameResult> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          height: MediaQuery.of(context).size.longestSide,
-          width: MediaQuery.of(context).size.longestSide,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: HexColor("#2a6e2d"),
-              width: 5, // red as border color
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            height: MediaQuery.of(context).size.longestSide,
+            width: MediaQuery.of(context).size.longestSide,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: HexColor("#2a6e2d"),
+                width: 5, // red as border color
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
-              child: Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Image.asset(
-                  "assets/image/Qurankhwani.png",
-                  height: 200,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    "Hope you enjoy the quiz!!",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Schyler',
-                        color: HexColor("#2a6e2d")),
+            child: SingleChildScrollView(
+                child: Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            "Result",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Schyler',
-                                color: HexColor("#2a6e2d")),
+                  Image.asset(
+                    "assets/image/Qurankhwani.png",
+                    height: 200,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      "Hope you enjoy the quiz!!",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Schyler',
+                          color: HexColor("#2a6e2d")),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Result",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Schyler',
+                                  color: HexColor("#2a6e2d")),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                (widget.order != 0)
-                                    ? "You have completed the Puzzle in " +
-                                        widget.time
-                                    : "You have score " +
-                                        val.result.toString() +
-                                        " out of 5.",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Schyler',
-                                    color: HexColor("#2a6e2d")),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  (widget.order != 0)
+                                      ? "You have completed the Puzzle in " +
+                                          widget.time
+                                      : "You have score " +
+                                          val.result.toString() +
+                                          " out of 5.",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Schyler',
+                                      color: HexColor("#2a6e2d")),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ElevatedButton(
+                            style: style,
+                            onPressed: () async {
+                              val.pageCount = 1;
+                              val.result = 0;
+                              time = '';
+                              order = 0;
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                fontFamily: 'Schyler',
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          style: style,
-                          onPressed: () async {
-                            val.pageCount = 1;
-                            val.result = 0;
-                            time = '';
-                            order = 0;
-                            Navigator.pop(context);
-                          },
-                          child: const Text(
-                            'Close',
-                            style: TextStyle(
-                              fontFamily: 'Schyler',
-                            ),
                           ),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-          )),
+                        ],
+                      )),
+                ],
+              ),
+            )),
+          ),
         ),
       ),
     );

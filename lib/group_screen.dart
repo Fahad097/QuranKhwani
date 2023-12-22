@@ -190,189 +190,199 @@ class _GroupScreenState extends State<GroupScreen> {
           .get();
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/image/background.jpg"),
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.green[400]!, Colors.green[700]!],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
             ),
-          ),
-          title: const Text(
-            "Groups",
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: 'Schyler',
+            title: const Text(
+              "Groups",
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Schyler',
+              ),
             ),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const addGroups()),
-                  );
-                },
-                icon: const Icon(Icons.add)),
-            IconButton(
-                color: (widget.isfavourite == false) ? Colors.grey : Colors.red,
-                onPressed: () {
-                  Navigator.pushReplacement(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              (widget.isfavourite == false)
-                                  ? GroupScreen(true)
-                                  : GroupScreen(false)));
-                },
-                icon: const Icon(Icons.favorite))
-          ],
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: (widget.isfavourite == false)
-                      ? getAllData()
-                      : getUserData(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return GridView.builder(
-                      itemCount: snapshot.data?.docs.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot ds = snapshot.data!.docs[index];
-                        var grname = ds['groupName'];
-                        var member = ds['groupMember'];
-                        var reason = ds['reason'];
-                        var userID = ds['userID'];
-                        var id = ds.id;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(
-                                        5.0) //                 <--- border radius here
-                                    ),
-                                border: Border.all(color: HexColor("#30652c"))),
-                            child: GridTile(
-                              //color: HexColor("#30652c"),
-                              //elevation: 10,
+                          builder: (context) => const addGroups()),
+                    );
+                  },
+                  icon: const Icon(Icons.add)),
+              IconButton(
+                  color:
+                      (widget.isfavourite == false) ? Colors.grey : Colors.red,
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                (widget.isfavourite == false)
+                                    ? GroupScreen(true)
+                                    : GroupScreen(false)));
+                  },
+                  icon: const Icon(Icons.favorite))
+            ],
+          ),
+          body: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder(
+                    future: (widget.isfavourite == false)
+                        ? getAllData()
+                        : getUserData(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot ds = snapshot.data!.docs[index];
+                          var grname = ds['groupName'];
+                          var member = ds['groupMember'];
+                          var reason = ds['reason'];
+                          var userID = ds['userID'];
+                          var id = ds.id;
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(
+                                          5.0) //                 <--- border radius here
+                                      ),
+                                  border:
+                                      Border.all(color: HexColor("#30652c"))),
+                              child: GridTile(
+                                //color: HexColor("#30652c"),
+                                //elevation: 10,
 
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Center(
-                                      child: Text(grname,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontFamily: 'Schyler',
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: HexColor("#30652c"))),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4),
+                                      child: Center(
+                                        child: Text(grname,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontFamily: 'Schyler',
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: HexColor("#30652c"))),
+                                      ),
+                                    ),
+                                    const Divider(),
+                                  ],
+                                ),
+                                footer: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.green[400]!,
+                                        Colors.green[700]!
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
                                   ),
-                                  const Divider(),
-                                ],
-                              ),
-                              footer: Container(
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/image/background.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: GridTileBar(
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(reason.toString(),
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: HexColor("#ffde59"))),
-                                  ),
-                                  trailing: IconButton(
-                                    color: HexColor("#ffde59"),
-                                    icon: const Icon(Icons.arrow_right_sharp),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => GridDetail(
-                                                grname,
-                                                member,
-                                                reason,
-                                                id,
-                                                myID,
-                                                userID)),
-                                      );
-                                    },
+                                  child: GridTileBar(
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(reason.toString(),
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: HexColor("#ffde59"))),
+                                    ),
+                                    trailing: IconButton(
+                                      color: HexColor("#ffde59"),
+                                      icon: const Icon(Icons.arrow_right_sharp),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => GridDetail(
+                                                  grname,
+                                                  member,
+                                                  reason,
+                                                  id,
+                                                  myID,
+                                                  userID)),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 15,
-                      ),
-                    );
-                  },
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 3 / 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 15,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(canvasColor: Colors.transparent),
-                      child: BottomNavigationBar(
-                        elevation: 0,
-                        currentIndex: _selectedIndex,
-                        onTap: _onItemTapped,
-                        selectedItemColor: HexColor("#ffde59"),
-                        items: [
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.home),
-                              label: 'Home',
-                              backgroundColor: HexColor('#2a6e2d')),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.list),
-                              label: 'Juz List',
-                              backgroundColor: HexColor('#2a6e2d')),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.format_list_numbered),
-                              label: 'Count',
-                              backgroundColor: HexColor('#2a6e2d')),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.group),
-                              label: 'Groups',
-                              backgroundColor: HexColor('#2a6e2d')),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.bookmark),
-                              label: 'Bookmarks',
-                              backgroundColor: HexColor('#2a6e2d')),
-                          const BottomNavigationBarItem(
-                              icon: Icon(Icons.panorama_fisheye_rounded),
-                              label: 'Duas')
-                        ],
-                      ))),
-            ],
-          ),
-        ));
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Theme(
+                        data: Theme.of(context)
+                            .copyWith(canvasColor: Colors.transparent),
+                        child: BottomNavigationBar(
+                          elevation: 0,
+                          currentIndex: _selectedIndex,
+                          onTap: _onItemTapped,
+                          selectedItemColor: HexColor("#ffde59"),
+                          items: [
+                            BottomNavigationBarItem(
+                                icon: const Icon(Icons.home),
+                                label: 'Home',
+                                backgroundColor: HexColor('#2a6e2d')),
+                            BottomNavigationBarItem(
+                                icon: const Icon(Icons.list),
+                                label: 'Juz List',
+                                backgroundColor: HexColor('#2a6e2d')),
+                            BottomNavigationBarItem(
+                                icon: const Icon(Icons.format_list_numbered),
+                                label: 'Count',
+                                backgroundColor: HexColor('#2a6e2d')),
+                            BottomNavigationBarItem(
+                                icon: const Icon(Icons.group),
+                                label: 'Groups',
+                                backgroundColor: HexColor('#2a6e2d')),
+                            BottomNavigationBarItem(
+                                icon: const Icon(Icons.bookmark),
+                                label: 'Bookmarks',
+                                backgroundColor: HexColor('#2a6e2d')),
+                            const BottomNavigationBarItem(
+                                icon: Icon(Icons.panorama_fisheye_rounded),
+                                label: 'Duas')
+                          ],
+                        ))),
+              ],
+            ),
+          )),
+    );
   }
 }

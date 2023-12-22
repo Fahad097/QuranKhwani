@@ -96,204 +96,212 @@ class _BookmarkPageState extends State<BookmarkPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/image/background.jpg"),
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.green[400]!, Colors.green[700]!],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
             ),
-          ),
-          title: const Text(
-            "Bookmarks",
-            style: TextStyle(fontSize: 25, fontFamily: 'Schyler'),
-          ),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MyHomePage(
-                            title: 'Quran Khwani',
-                          )),
-                  (Route<dynamic> route) => false,
+            title: const Text(
+              "Bookmarks",
+              style: TextStyle(fontSize: 25, fontFamily: 'Schyler'),
+            ),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePage(
+                              title: 'Quran Khwani',
+                            )),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                icon: const Icon(Icons.arrow_back_sharp))),
+        body: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection('Bookmarks')
+                .where('state', isEqualTo: 'Juz')
+                .orderBy("createdDate", descending: true)
+                .get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
-              },
-              icon: const Icon(Icons.arrow_back_sharp))),
-      body: FutureBuilder(
-          future: FirebaseFirestore.instance
-              .collection('Bookmarks')
-              .where('state', isEqualTo: 'Juz')
-              .orderBy("createdDate", descending: true)
-              .get(),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot ds = snapshot.data!.docs[index];
-                        String title =
-                            (ds["juzName"] != null) ? ds["juzName"] : '';
-                        var juzno = (ds["juzNo"] != null) ? ds["juzNo"] : '';
-                        var pageno = (ds["pageNo"] != null) ? ds["pageNo"] : '';
-                        var verseno =
-                            (ds["verseno"] != null) ? ds["verseno"] : '';
-                        var endVerseNo =
-                            (ds['endVerseNo'] != null) ? ds['endVerseNo'] : '';
-                        var startVerseNo = (ds['startVerseNo'] != null)
-                            ? ds['startVerseNo']
-                            : '';
-                        var surahno =
-                            (ds['surahNo'] != null) ? ds['surahNo'] : '';
-                        var position =
-                            (ds['position'] != null) ? ds['position'] : 0;
-                        var value = index + 1;
-                        return Column(
-                          children: [
-                            GestureDetector(
-                              child: (title != '')
-                                  ? Center(
-                                      child: Card(
-                                          margin: const EdgeInsets.all(8),
+              }
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot ds = snapshot.data!.docs[index];
+                          String title =
+                              (ds["juzName"] != null) ? ds["juzName"] : '';
+                          var juzno = (ds["juzNo"] != null) ? ds["juzNo"] : '';
+                          var pageno =
+                              (ds["pageNo"] != null) ? ds["pageNo"] : '';
+                          var verseno =
+                              (ds["verseno"] != null) ? ds["verseno"] : '';
+                          var endVerseNo = (ds['endVerseNo'] != null)
+                              ? ds['endVerseNo']
+                              : '';
+                          var startVerseNo = (ds['startVerseNo'] != null)
+                              ? ds['startVerseNo']
+                              : '';
+                          var surahno =
+                              (ds['surahNo'] != null) ? ds['surahNo'] : '';
+                          var position =
+                              (ds['position'] != null) ? ds['position'] : 0;
+                          var value = index + 1;
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                child: (title != '')
+                                    ? Center(
+                                        child: Card(
+                                            margin: const EdgeInsets.all(8),
 
-                                          //  height: 50,
-                                          // width: 100,
-                                          color: HexColor("#ffde59"),
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(12),
-                                              child: Center(
-                                                  child: Text(
-                                                      title +
-                                                          " " +
-                                                          juzno.toString() +
-                                                          ":" +
-                                                          surahno.toString() +
-                                                          ':' +
-                                                          verseno.toString(),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        color:
-                                                            HexColor("#2a6e2d"),
-                                                        fontFamily: 'Schyler',
-                                                        fontSize: textFontSize,
-                                                      ))))))
-                                  : const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                              onLongPress: () {
-                                print('in');
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        scrollable: true,
-                                        title: const Text(
-                                            'Are you sure to delete this Bookmark?'),
-                                        actions: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              TextButton(
-                                                onPressed: () async {
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('Bookmarks')
-                                                      .doc(ds.id)
-                                                      .delete();
-                                                  Navigator.pushAndRemoveUntil(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const BookmarkPage()),
-                                                    (Route<dynamic> route) =>
-                                                        false,
-                                                  );
-                                                },
-                                                child: const Text('Yes'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('No'),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      );
-                                    });
-                              },
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => JuzPageView(
-                                            title,
-                                            juzno.toString(),
-                                            verseno.toString(),
-                                            startVerseNo.toString(),
-                                            endVerseNo.toString(),
-                                            surahno.toString(),
-                                            position,
-                                            Colors.green)));
-                              },
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(canvasColor: Colors.transparent),
-                        child: BottomNavigationBar(
-                          elevation: 0,
-                          currentIndex: _selectedIndex,
-                          onTap: _onItemTapped,
-                          selectedItemColor: HexColor("#ffde59"),
-                          items: [
-                            BottomNavigationBarItem(
-                                icon: const Icon(Icons.home),
-                                label: 'Home',
-                                backgroundColor: HexColor('#2a6e2d')),
-                            BottomNavigationBarItem(
-                                icon: const Icon(Icons.list),
-                                label: 'Juz List',
-                                backgroundColor: HexColor('#2a6e2d')),
-                            BottomNavigationBarItem(
-                                icon: const Icon(Icons.format_list_numbered),
-                                label: 'Count',
-                                backgroundColor: HexColor('#2a6e2d')),
-                            BottomNavigationBarItem(
-                                icon: const Icon(Icons.group),
-                                label: 'Groups',
-                                backgroundColor: HexColor('#2a6e2d')),
-                            BottomNavigationBarItem(
-                                icon: const Icon(Icons.bookmark),
-                                label: 'Bookmarks',
-                                backgroundColor: HexColor('#2a6e2d')),
-                            const BottomNavigationBarItem(
-                                icon: Icon(Icons.panorama_fisheye_rounded),
-                                label: 'Duas'),
-                          ],
-                        ))),
-              ],
-            );
-          }),
+                                            //  height: 50,
+                                            // width: 100,
+                                            color: HexColor("#ffde59"),
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                child: Center(
+                                                    child: Text(
+                                                        title +
+                                                            " " +
+                                                            juzno.toString() +
+                                                            ":" +
+                                                            surahno.toString() +
+                                                            ':' +
+                                                            verseno.toString(),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          color: HexColor(
+                                                              "#2a6e2d"),
+                                                          fontFamily: 'Schyler',
+                                                          fontSize:
+                                                              textFontSize,
+                                                        ))))))
+                                    : const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                onLongPress: () {
+                                  print('in');
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          scrollable: true,
+                                          title: const Text(
+                                              'Are you sure to delete this Bookmark?'),
+                                          actions: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Bookmarks')
+                                                        .doc(ds.id)
+                                                        .delete();
+                                                    Navigator
+                                                        .pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const BookmarkPage()),
+                                                      (Route<dynamic> route) =>
+                                                          false,
+                                                    );
+                                                  },
+                                                  child: const Text('Yes'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('No'),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      });
+                                },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => JuzPageView(
+                                              title,
+                                              juzno.toString(),
+                                              verseno.toString(),
+                                              startVerseNo.toString(),
+                                              endVerseNo.toString(),
+                                              surahno.toString(),
+                                              position,
+                                              Colors.green)));
+                                },
+                              ),
+                            ],
+                          );
+                        }),
+                  ),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Theme(
+                          data: Theme.of(context)
+                              .copyWith(canvasColor: Colors.transparent),
+                          child: BottomNavigationBar(
+                            elevation: 0,
+                            currentIndex: _selectedIndex,
+                            onTap: _onItemTapped,
+                            selectedItemColor: HexColor("#ffde59"),
+                            items: [
+                              BottomNavigationBarItem(
+                                  icon: const Icon(Icons.home),
+                                  label: 'Home',
+                                  backgroundColor: HexColor('#2a6e2d')),
+                              BottomNavigationBarItem(
+                                  icon: const Icon(Icons.list),
+                                  label: 'Juz List',
+                                  backgroundColor: HexColor('#2a6e2d')),
+                              BottomNavigationBarItem(
+                                  icon: const Icon(Icons.format_list_numbered),
+                                  label: 'Count',
+                                  backgroundColor: HexColor('#2a6e2d')),
+                              BottomNavigationBarItem(
+                                  icon: const Icon(Icons.group),
+                                  label: 'Groups',
+                                  backgroundColor: HexColor('#2a6e2d')),
+                              BottomNavigationBarItem(
+                                  icon: const Icon(Icons.bookmark),
+                                  label: 'Bookmarks',
+                                  backgroundColor: HexColor('#2a6e2d')),
+                              const BottomNavigationBarItem(
+                                  icon: Icon(Icons.panorama_fisheye_rounded),
+                                  label: 'Duas'),
+                            ],
+                          ))),
+                ],
+              );
+            }),
+      ),
     );
   }
 }

@@ -20,113 +20,117 @@ class _GridEditState extends State<GridEdit> {
     final reason = TextEditingController();
     final memberNo = TextEditingController();
     final ButtonStyle style = ElevatedButton.styleFrom(
-        backgroundColor: HexColor("#2a6e2d"), textStyle: const TextStyle(fontSize: 20));
-    return Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/image/background.jpg"),
-                fit: BoxFit.cover,
+        backgroundColor: HexColor("#2a6e2d"),
+        textStyle: const TextStyle(fontSize: 20));
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.green[400]!, Colors.green[700]!],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+            title: const Text(
+              "Edit Groups",
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Schyler',
               ),
             ),
           ),
-          title: const Text(
-            "Edit Groups",
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: 'Schyler',
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    controller: grName,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hoverColor: HexColor("#2a6e2d"),
-                      hintText: 'Group Name',
+          body: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: grName,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        hoverColor: HexColor("#2a6e2d"),
+                        hintText: 'Group Name',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter something';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter something';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    controller: reason,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hoverColor: HexColor("#2a6e2d"),
-                      hintText: 'Reason for Quran Khwani',
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: reason,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        hoverColor: HexColor("#2a6e2d"),
+                        hintText: 'Reason for Quran Khwani',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter something';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter something';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: memberNo,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hoverColor: HexColor("#2a6e2d"),
-                      hintText: 'Total Member',
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: memberNo,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        hoverColor: HexColor("#2a6e2d"),
+                        hintText: 'Total Member',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter something';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter something';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: style,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        var uservalue =
-                            await FirebaseAuth.instance.signInAnonymously();
-                        await FirebaseFirestore.instance
-                            .collection("Groups")
-                            .doc(widget.id)
-                            .update({
-                          'userID': uservalue.user?.uid,
-                          'groupName': grName.text,
-                          'reason': reason.text,
-                          'groupMember': int.parse(memberNo.text),
-                        });
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      style: style,
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          var uservalue =
+                              await FirebaseAuth.instance.signInAnonymously();
+                          await FirebaseFirestore.instance
+                              .collection("Groups")
+                              .doc(widget.id)
+                              .update({
+                            'userID': uservalue.user?.uid,
+                            'groupName': grName.text,
+                            'reason': reason.text,
+                            'groupMember': int.parse(memberNo.text),
+                          });
 
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GroupScreen(false)));
-                      }
-                    },
-                    child: const Text('Edit Group'),
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      GroupScreen(false)));
+                        }
+                      },
+                      child: const Text('Edit Group'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }

@@ -18,10 +18,12 @@ class MyDrawer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/background.jpg"),
-              fit: BoxFit.cover),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.green[400]!, Colors.green[700]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 100.0),
